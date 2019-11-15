@@ -4,27 +4,62 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SteinExample · Phoenix Framework</title>
+    <title>Stein Example</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+
+    <meta property="og:site_name" content="Stein Example" />
+
+    <%= if Map.has_key?(assigns, :open_graph_title) do %>
+      <meta property="og:title" content="<%= @open_graph_title %>" />
+    <% end %>
+
+    <%= if Map.has_key?(assigns, :open_graph_description) do %>
+      <meta property="og:description" content="<%= @open_graph_description %>" />
+    <% end %>
+
+    <%= if Map.has_key?(assigns, :open_graph_url) do %>
+      <meta property="og:url" content="<%= @open_graph_url %>" />
+    <% end %>
   </head>
   <body>
     <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-          </ul>
-        </nav>
-        <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
+      <nav class="navbar navbar-expand-md" role="menubar">
+        <div class="container">
+          <%= link(to: Routes.page_path(@conn, :index), class: "navbar-brand") do %>
+            Stein Example
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarLinks">
+            <ul class="navbar-nav ml-auto">
+              <%= if Map.has_key?(assigns, :current_user) do %>
+                <li class="nav-item">
+                  <%= link("Sign Out", to: Routes.session_path(@conn, :delete), method: :delete, class: "nav-link") %>
+                </li>
+              <% else %>
+                <li class="nav-item">
+                  <%= link("Sign In", to: Routes.session_path(@conn, :new), class: "nav-link") %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
+
     <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= if flash = get_flash(@conn, :info) do %>
+        <p class="alert alert-info" role="alert"><%= flash %></p>
+      <% end %>
+      <%= if flash = get_flash(@conn, :error) do %>
+        <p class="alert alert-danger" role="alert"><%= flash %></p>
+      <% end %>
+
       <%= render @view_module, @view_template, assigns %>
     </main>
+
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

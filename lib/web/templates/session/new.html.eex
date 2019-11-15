@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+  <div class="col-xl-10 col-lg-12 col-md-9">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <div class="row h-100">
+          <div class="col-lg-6 my-auto">
+            <h1 class="text-center my-auto">Stein Example</h1>
+          </div>
+          <div class="col-lg-6">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+              </div>
+              <%= form_for(@changeset, Routes.session_path(@conn, :create), fn f -> %>
+                <div class="form-group">
+                  <%= text_input(f, :email, type: :email, class: "form-control", placeholder: "Email") %>
+                </div>
+                <div class="form-group">
+                  <%= password_input(f, :password, class: "form-control", placeholder: "Password") %>
+                </div>
+                <%= submit("Login", class: "btn btn-primary") %>
+              <% end) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

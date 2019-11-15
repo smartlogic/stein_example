@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content="<%= Plug.CSRFProtection.get_csrf_token() %>">
+    <title>Stein Example</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  </head>
+  <body class="bg-gradient-primary">
+    <div class="container">
+      <%= if get_flash(@conn, :info) do %>
+        <div class="card bg-primary text-white shadow mt-5">
+          <div class="card-body">
+            <%= get_flash(@conn, :info) %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= if get_flash(@conn, :error) do %>
+        <div class="card bg-danger text-white shadow mt-5">
+          <div class="card-body">
+            <%= get_flash(@conn, :error) %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= render @view_module, @view_template, assigns %>
+    </div>
+
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
