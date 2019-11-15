@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <div class="col-xl-10 col-lg-12 col-md-9">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <div class="p-5">
+          <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Register for Stein</h1>
+          </div>
+          <%= form_for(@changeset, Routes.registration_path(@conn, :create), fn f -> %>
+            <%= FormView.text_field(f, :email) %>
+
+            <%= FormView.text_field(f, :first_name) %>
+
+            <%= FormView.text_field(f, :last_name) %>
+
+            <%= FormView.password_field(f, :password, placeholder: "Password") %>
+
+            <%= FormView.password_field(f, :password_confirmation, placeholder: "Password Confirmation") %>
+
+            <%= FormView.submit_button("Register") %>
+          <% end) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,5 +24,9 @@ defmodule Web.Router do
     post("/sign-in", SessionController, :create)
 
     delete("/sign-out", SessionController, :delete)
+
+    get("/register", RegistrationController, :new)
+
+    post("/register", RegistrationController, :create)
   end
 end
