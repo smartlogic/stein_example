@@ -3,6 +3,8 @@ defmodule SteinExample.Users do
   Users context
   """
 
+  alias SteinExample.Emails
+  alias SteinExample.Mailer
   alias SteinExample.Repo
   alias SteinExample.Users.User
   alias Stein.Accounts
@@ -49,8 +51,25 @@ defmodule SteinExample.Users do
   Create a new user
   """
   def create(params) do
-    %User{}
-    |> User.create_changeset(params)
-    |> Repo.insert()
+    changeset = User.create_changeset(%User{}, params)
+
+    case Repo.insert(changeset) do
+      {:ok, user} ->
+        user
+        |> Emails.welcome_email()
+        |> Mailer.deliver_later()
+
+        {:ok, user}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
+  end
+
+  @doc """
+  Confirm an email address
+  """
+  def verify_email(token) do
+    Accounts.verify_email(Repo, User, token)
   end
 end

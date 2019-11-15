@@ -16,3 +16,5 @@ config :stein_example, Web.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :stein_example, SteinExample.Mailer, adapter: Bamboo.TestAdapter

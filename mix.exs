@@ -33,6 +33,7 @@ defmodule SteinExample.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bamboo, "~> 1.3"},
       {:credo, "~> 1.1", only: [:dev, :test]},
       {:ecto_sql, "~> 3.1"},
       {:gettext, "~> 0.11"},

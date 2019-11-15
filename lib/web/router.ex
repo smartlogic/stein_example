@@ -28,5 +28,11 @@ defmodule Web.Router do
     get("/register", RegistrationController, :new)
 
     post("/register", RegistrationController, :create)
+
+    get("/users/confirm", ConfirmationController, :confirm)
+  end
+
+  if Mix.env() == :dev do
+    forward("/emails/sent", Bamboo.SentEmailViewerPlug)
   end
 end
