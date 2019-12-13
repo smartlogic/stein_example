@@ -16,6 +16,15 @@ defmodule SteinExample.Emails do
     |> render(:welcome)
   end
 
+  def password_reset(user) do
+    reset_url = Routes.registration_reset_path(Endpoint, :edit, token: user.password_reset_token)
+
+    base_email()
+    |> to(user.email)
+    |> subject("Password reset for SteinExample")
+    |> render("password-reset.html", reset_url: reset_url)
+  end
+
   defp base_email() do
     new_email()
     |> from("no-reply@example.com")

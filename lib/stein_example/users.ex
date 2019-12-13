@@ -72,4 +72,22 @@ defmodule SteinExample.Users do
   def verify_email(token) do
     Accounts.verify_email(Repo, User, token)
   end
+
+  @doc """
+  Start to reset a user's password
+  """
+  def start_password_reset(email) do
+    Stein.Accounts.start_password_reset(Repo, User, email, fn user ->
+      user
+      |> Emails.password_reset()
+      |> Mailer.deliver_later()
+    end)
+  end
+
+  @doc """
+  Reset the user's password based on a valid reset token
+  """
+  def reset_password(token, params) do
+    Stein.Accounts.reset_password(Repo, User, token, params)
+  end
 end

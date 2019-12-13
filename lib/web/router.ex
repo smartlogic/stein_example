@@ -29,6 +29,14 @@ defmodule Web.Router do
 
     post("/register", RegistrationController, :create)
 
+    get("/register/reset", RegistrationResetController, :new)
+
+    post("/register/reset", RegistrationResetController, :create)
+
+    get("/register/reset/verify", RegistrationResetController, :edit)
+
+    post("/register/reset/verify", RegistrationResetController, :update)
+
     get("/users/confirm", ConfirmationController, :confirm)
   end
 

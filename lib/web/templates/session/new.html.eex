@@ -19,6 +19,8 @@
                   <%= password_input(f, :password, class: "form-control", placeholder: "Password") %>
                 </div>
                 <%= submit("Login", class: "btn btn-primary") %>
+                <%= link("Register", to: Routes.registration_path(@conn, :new), class: "btn btn-default") %>
+                <%= link("Forgot Password?", to: Routes.registration_reset_path(@conn, :new), class: "btn btn-default") %>
               <% end) %>
             </div>
           </div>
