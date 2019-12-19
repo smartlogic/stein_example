@@ -19,7 +19,7 @@ defmodule SteinExample.DataCase do
   using do
     quote do
       alias SteinExample.Repo
-      alias Test.TestHelpers
+      alias SteinExample.TestHelpers
 
       import Ecto
       import Ecto.Changeset

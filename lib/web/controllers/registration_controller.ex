@@ -24,6 +24,7 @@ defmodule Web.RegistrationController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "There was an error. Please try again.")
+        |> put_status(422)
         |> assign(:changeset, changeset)
         |> render("new.html")
     end
