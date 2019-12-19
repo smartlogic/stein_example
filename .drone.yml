@@ -39,7 +39,7 @@ steps:
   - name: mix
     path: /root/.mix
   commands:
-  - sleep 15
+  - mv config/test.drone.exs config/test.extra.exs
   - mix ecto.migrate
   - mix test
 
