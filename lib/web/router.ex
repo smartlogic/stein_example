@@ -10,6 +10,10 @@ defmodule Web.Router do
     plug Web.Plugs.FetchUser
   end
 
+  pipeline :logged_in do
+    plug Web.Plugs.EnsureUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -38,6 +42,12 @@ defmodule Web.Router do
     post("/register/reset/verify", RegistrationResetController, :update)
 
     get("/users/confirm", ConfirmationController, :confirm)
+  end
+
+  scope "/", Web do
+    pipe_through([:browser, :logged_in])
+
+    resources("/profile", ProfileController, singleton: true, only: [:show])
   end
 
   if Mix.env() == :dev do
