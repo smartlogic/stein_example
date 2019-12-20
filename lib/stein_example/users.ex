@@ -10,9 +10,14 @@ defmodule SteinExample.Users do
   alias Stein.Accounts
 
   @doc """
-  Changeset for a session
+  Changeset for a session or registration
   """
   def new(), do: Ecto.Changeset.change(%User{}, %{})
+
+  @doc """
+  Changeset for updating a user
+  """
+  def edit(user), do: Ecto.Changeset.change(user, %{})
 
   @doc """
   Get a user by id
@@ -63,6 +68,34 @@ defmodule SteinExample.Users do
 
       {:error, changeset} ->
         {:error, changeset}
+    end
+  end
+
+  @doc """
+  Update a user's information
+  """
+  def update(user, params) do
+    changeset = User.update_changeset(user, params)
+
+    case Repo.update(changeset) do
+      {:ok, user} ->
+        maybe_verify_email_again(user, changeset)
+        {:ok, user}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
+  end
+
+  defp maybe_verify_email_again(user, changeset) do
+    case is_nil(Ecto.Changeset.get_change(changeset, :email)) do
+      true ->
+        :ok
+
+      false ->
+        user
+        |> Emails.verify_email()
+        |> Mailer.deliver_later()
     end
   end
 

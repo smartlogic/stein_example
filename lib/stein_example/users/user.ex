@@ -39,4 +39,24 @@ defmodule SteinExample.Users.User do
     |> validate_required([:email, :first_name, :last_name, :password_hash])
     |> unique_constraint(:email, name: :users_lower_email_index)
   end
+
+  def update_changeset(struct, params) do
+    struct
+    |> cast(params, [:email, :first_name, :last_name])
+    |> validate_required([:email, :first_name, :last_name])
+    |> unique_constraint(:email, name: :users_lower_email_index)
+    |> maybe_restart_email_verification()
+  end
+
+  defp maybe_restart_email_verification(changeset) do
+    case is_nil(get_change(changeset, :email)) do
+      true ->
+        changeset
+
+      false ->
+        changeset
+        |> Stein.Accounts.start_email_verification_changeset()
+        |> put_change(:email_verified_at, nil)
+    end
+  end
 end

@@ -47,7 +47,7 @@ defmodule Web.Router do
   scope "/", Web do
     pipe_through([:browser, :logged_in])
 
-    resources("/profile", ProfileController, singleton: true, only: [:show])
+    resources("/profile", ProfileController, singleton: true, only: [:show, :edit, :update])
   end
 
   if Mix.env() == :dev do

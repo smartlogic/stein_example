@@ -21,6 +21,35 @@ defmodule SteinExample.UsersTest do
     end
   end
 
+  describe "updating users" do
+    test "change basic info" do
+      {:ok, user} = TestHelpers.create_user()
+
+      {:ok, user} =
+        Users.update(user, %{
+          first_name: "Updated",
+          last_name: "LastName"
+        })
+
+      assert user.first_name == "Updated"
+      assert user.last_name == "LastName"
+    end
+
+    test "changing email triggers verification" do
+      {:ok, user} = TestHelpers.create_user()
+      {:ok, user} = Users.verify_email(user.email_verification_token)
+
+      {:ok, user} =
+        Users.update(user, %{
+          email: "new@example.com"
+        })
+
+      assert user.email == "new@example.com"
+      assert user.email_verification_token
+      refute user.email_verified_at
+    end
+  end
+
   describe "password resets" do
     test "starting a password reset" do
       {:ok, user} = TestHelpers.create_user(%{email: "user@example.com"})

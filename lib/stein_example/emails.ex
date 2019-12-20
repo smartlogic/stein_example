@@ -16,6 +16,16 @@ defmodule SteinExample.Emails do
     |> render(:welcome)
   end
 
+  def verify_email(user) do
+    confirm_url = Routes.confirmation_url(Endpoint, :confirm, code: user.email_verification_token)
+
+    base_email()
+    |> to(user.email)
+    |> subject("Please verify your email address")
+    |> assign(:confirm_url, confirm_url)
+    |> render(:verify_email)
+  end
+
   def password_reset(user) do
     reset_url = Routes.registration_reset_path(Endpoint, :edit, token: user.password_reset_token)
 
