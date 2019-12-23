@@ -48,6 +48,13 @@ defmodule SteinExample.Users.User do
     |> maybe_restart_email_verification()
   end
 
+  def password_changeset(struct, params) do
+    struct
+    |> cast(params, [:password, :password_confirmation])
+    |> validate_confirmation(:password)
+    |> Stein.Accounts.hash_password()
+  end
+
   defp maybe_restart_email_verification(changeset) do
     case is_nil(get_change(changeset, :email)) do
       true ->

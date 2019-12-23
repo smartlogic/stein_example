@@ -20,6 +20,22 @@ defmodule Web.ProfileController do
     |> render("edit.html")
   end
 
+  def update(conn, %{"user" => params = %{"current_password" => password}}) do
+    %{current_user: user} = conn.assigns
+
+    case Users.change_password(user, password, params) do
+      {:ok, _user} ->
+        conn
+        |> put_flash(:info, "Password updated.")
+        |> redirect(to: Routes.profile_path(conn, :show))
+
+      {:error, :invalid} ->
+        conn
+        |> put_flash(:error, "Could not update your password.")
+        |> redirect(to: Routes.profile_path(conn, :edit))
+    end
+  end
+
   def update(conn, %{"user" => params}) do
     %{current_user: user} = conn.assigns
 

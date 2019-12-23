@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-xl-10 col-lg-12 col-md-9">
+  <div class="col-md-6">
     <div class="card">
       <div class="card-body p-0">
         <div class="p-5">
@@ -11,6 +11,26 @@
             <%= FormView.text_field(f, :first_name) %>
 
             <%= FormView.text_field(f, :last_name) %>
+
+            <%= FormView.submit_button("Update") %>
+          <% end) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="p-5">
+          <h1 class="h4 text-gray-900 mb-4">Change your password</h1>
+
+          <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put], fn f -> %>
+            <%= FormView.password_field(f, :current_password, label: "Current") %>
+
+            <%= FormView.password_field(f, :password) %>
+
+            <%= FormView.password_field(f, :password_confirmation, label: "Confirmation") %>
 
             <%= FormView.submit_button("Update") %>
           <% end) %>

@@ -50,6 +50,40 @@ defmodule SteinExample.UsersTest do
     end
   end
 
+  describe "changing the password" do
+    test "correct current password" do
+      {:ok, user} = TestHelpers.create_user(%{password: "password"})
+
+      {:ok, user} =
+        Users.change_password(user, "password", %{
+          password: "p@ssw0rd",
+          password_confirmation: "p@ssw0rd"
+        })
+
+      assert {:ok, _user} = Users.validate_login(user.email, "p@ssw0rd")
+    end
+
+    test "invalid current password" do
+      {:ok, user} = TestHelpers.create_user(%{password: "password"})
+
+      {:error, :invalid} =
+        Users.change_password(user, "p2ssword", %{
+          password: "p@ssw0rd",
+          password_confirmation: "p@ssw0rd"
+        })
+    end
+
+    test "invalid new passwords" do
+      {:ok, user} = TestHelpers.create_user(%{password: "password"})
+
+      {:error, _changeset} =
+        Users.change_password(user, "password", %{
+          password: "p@ssw0rd",
+          password_confirmation: "p@ssw0r"
+        })
+    end
+  end
+
   describe "password resets" do
     test "starting a password reset" do
       {:ok, user} = TestHelpers.create_user(%{email: "user@example.com"})

@@ -100,6 +100,23 @@ defmodule SteinExample.Users do
   end
 
   @doc """
+  Change the user's password
+
+  First validates the password
+  """
+  def change_password(user, current_password, params) do
+    case validate_login(user.email, current_password) do
+      {:error, :invalid} ->
+        {:error, :invalid}
+
+      {:ok, user} ->
+        user
+        |> User.password_changeset(params)
+        |> Repo.update()
+    end
+  end
+
+  @doc """
   Confirm an email address
   """
   def verify_email(token) do
