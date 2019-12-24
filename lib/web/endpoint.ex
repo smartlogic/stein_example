@@ -33,6 +33,7 @@ defmodule Web.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug Logster.Plugs.Logger
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

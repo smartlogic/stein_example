@@ -38,6 +38,7 @@ defmodule SteinExample.MixProject do
       {:ecto_sql, "~> 3.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
+      {:logster, "~> 1.0"},
       {:phoenix, "~> 1.4.11"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.11"},
