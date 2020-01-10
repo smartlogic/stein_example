@@ -49,7 +49,7 @@ defmodule SteinExample.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:stein, "~> 0.5"},
       {:stein_phoenix, "~> 0.1"},
-      {:stein_storage, git: "git@github.com:smartlogic/stein_storage.git"}
+      {:stein_storage, git: "https://github.com/smartlogic/stein_storage.git"}
     ]
   end
 
