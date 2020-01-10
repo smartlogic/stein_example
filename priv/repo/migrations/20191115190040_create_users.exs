@@ -15,6 +15,9 @@ defmodule SteinExample.Repo.Migrations.CreateUsers do
       add(:password_reset_token, :uuid)
       add(:password_reset_expires_at, :utc_datetime)
 
+      add(:avatar_key, :uuid)
+      add(:avatar_extension, :string)
+
       timestamps()
     end
 

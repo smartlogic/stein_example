@@ -2,6 +2,12 @@
   <div class="col-xl-10 col-lg-12 col-md-9">
     <div class="card">
       <div class="card-body p-0">
+        <%= if avatar?(@user) do %>
+          <div class="p-5">
+            <%= avatar_img(@user) %>
+          </div>
+        <% end %>
+
         <div class="p-5">
           <h1 class="h4 text-gray-900 mb-4"><%= full_name(@user) %>'s Profile</h1>
           <%= link(to: Routes.profile_path(@conn, :edit), class: "btn btn-secondary") do %>

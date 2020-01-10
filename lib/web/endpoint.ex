@@ -43,5 +43,9 @@ defmodule Web.Endpoint do
     key: "_stein_example_key",
     signing_salt: "76sn4b3J"
 
+  if Mix.env() == :dev do
+    plug(Plug.Static, at: "/uploads", from: "uploads/files")
+  end
+
   plug Web.Router
 end

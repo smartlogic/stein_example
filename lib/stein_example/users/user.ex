@@ -26,6 +26,9 @@ defmodule SteinExample.Users.User do
     field(:password_reset_token, Ecto.UUID)
     field(:password_reset_expires_at, :utc_datetime)
 
+    field(:avatar_key, Ecto.UUID)
+    field(:avatar_extension, :string)
+
     timestamps()
   end
 
@@ -53,6 +56,13 @@ defmodule SteinExample.Users.User do
     |> cast(params, [:password, :password_confirmation])
     |> validate_confirmation(:password)
     |> Stein.Accounts.hash_password()
+  end
+
+  def avatar_changeset(struct, key, extension) do
+    struct
+    |> change()
+    |> put_change(:avatar_key, key)
+    |> put_change(:avatar_extension, extension)
   end
 
   defp maybe_restart_email_verification(changeset) do

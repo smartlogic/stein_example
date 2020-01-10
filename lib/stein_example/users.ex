@@ -6,6 +6,7 @@ defmodule SteinExample.Users do
   alias SteinExample.Emails
   alias SteinExample.Mailer
   alias SteinExample.Repo
+  alias SteinExample.Users.Avatar
   alias SteinExample.Users.User
   alias Stein.Accounts
 
@@ -58,15 +59,23 @@ defmodule SteinExample.Users do
   def create(params) do
     changeset = User.create_changeset(%User{}, params)
 
-    case Repo.insert(changeset) do
-      {:ok, user} ->
+    result =
+      Ecto.Multi.new()
+      |> Ecto.Multi.insert(:user, changeset)
+      |> Ecto.Multi.run(:avatar, fn _repo, %{user: user} ->
+        Avatar.maybe_upload_avatar(user, params)
+      end)
+      |> Repo.transaction()
+
+    case result do
+      {:ok, %{avatar: user}} ->
         user
         |> Emails.welcome_email()
         |> Mailer.deliver_later()
 
         {:ok, user}
 
-      {:error, changeset} ->
+      {:error, _type, changeset, _changes} ->
         {:error, changeset}
     end
   end
@@ -77,12 +86,20 @@ defmodule SteinExample.Users do
   def update(user, params) do
     changeset = User.update_changeset(user, params)
 
-    case Repo.update(changeset) do
-      {:ok, user} ->
+    result =
+      Ecto.Multi.new()
+      |> Ecto.Multi.update(:user, changeset)
+      |> Ecto.Multi.run(:avatar, fn _repo, %{user: user} ->
+        Avatar.maybe_upload_avatar(user, params)
+      end)
+      |> Repo.transaction()
+
+    case result do
+      {:ok, %{avatar: user}} ->
         maybe_verify_email_again(user, changeset)
         {:ok, user}
 
-      {:error, changeset} ->
+      {:error, _type, changeset, _changes} ->
         {:error, changeset}
     end
   end

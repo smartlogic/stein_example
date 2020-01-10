@@ -45,9 +45,11 @@ defmodule SteinExample.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_pubsub, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
+      {:porcelain, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:stein, "~> 0.5"},
-      {:stein_phoenix, "~> 0.1"}
+      {:stein_phoenix, "~> 0.1"},
+      {:stein_storage, git: "git@github.com:smartlogic/stein_storage.git"}
     ]
   end
 
@@ -61,6 +63,7 @@ defmodule SteinExample.MixProject do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "ecto.migrate.reset": ["ecto.drop", "ecto.create", "ecto.migrate"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end

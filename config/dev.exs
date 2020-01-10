@@ -65,6 +65,8 @@ config :stein_example, Web.Endpoint,
     ]
   ]
 
+config :stein_example, SteinExample.Mailer, adapter: Bamboo.LocalAdapter
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
@@ -77,4 +79,6 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :phoenix, :logger, false
 
-config :stein_example, SteinExample.Mailer, adapter: Bamboo.LocalAdapter
+config :stein_storage,
+  backend: :file,
+  file_backend_folder: "uploads/"

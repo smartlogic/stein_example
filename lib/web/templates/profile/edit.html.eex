@@ -5,12 +5,14 @@
         <div class="p-5">
           <h1 class="h4 text-gray-900 mb-4">Update your profile</h1>
 
-          <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put], fn f -> %>
+          <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, multipart: true], fn f -> %>
             <%= FormView.text_field(f, :email) %>
 
             <%= FormView.text_field(f, :first_name) %>
 
             <%= FormView.text_field(f, :last_name) %>
+
+            <%= FormView.file_field(f, :avatar) %>
 
             <%= FormView.submit_button("Update") %>
           <% end) %>

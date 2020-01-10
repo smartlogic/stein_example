@@ -19,6 +19,21 @@ defmodule SteinExample.UsersTest do
       assert user.first_name == "John"
       assert user.last_name == "User"
     end
+
+    test "uploading an avatar" do
+      {:ok, user} =
+        Users.create(%{
+          email: "user@example.com",
+          first_name: "John",
+          last_name: "User",
+          password: "password",
+          password_confirmation: "password",
+          avatar: %{path: "test/fixtures/avatar.png", filename: "avatar.png"}
+        })
+
+      assert user.avatar_key
+      assert user.avatar_extension == ".png"
+    end
   end
 
   describe "updating users" do
@@ -47,6 +62,19 @@ defmodule SteinExample.UsersTest do
       assert user.email == "new@example.com"
       assert user.email_verification_token
       refute user.email_verified_at
+    end
+
+    test "uploading an avatar" do
+      {:ok, user} = TestHelpers.create_user()
+      {:ok, user} = Users.verify_email(user.email_verification_token)
+
+      {:ok, user} =
+        Users.update(user, %{
+          avatar: %{path: "test/fixtures/avatar.png", filename: "avatar.png"}
+        })
+
+      assert user.avatar_key
+      assert user.avatar_extension == ".png"
     end
   end
 
