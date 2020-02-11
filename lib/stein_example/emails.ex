@@ -27,7 +27,7 @@ defmodule SteinExample.Emails do
   end
 
   def password_reset(user) do
-    reset_url = Routes.registration_reset_path(Endpoint, :edit, token: user.password_reset_token)
+    reset_url = Routes.registration_reset_url(Endpoint, :edit, token: user.password_reset_token)
 
     base_email()
     |> to(user.email)
