@@ -36,6 +36,7 @@ defmodule SteinExample.MixProject do
       {:bamboo, "~> 1.3"},
       {:credo, "~> 1.1", only: [:dev, :test]},
       {:ecto_sql, "~> 3.1"},
+      {:ecto_enum, "~> 1.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:logster, "~> 1.0"},
@@ -47,8 +48,9 @@ defmodule SteinExample.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:porcelain, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:stein, "~> 0.5"},
+      {:stein, "~> 0.5.1"},
       {:stein_phoenix, "~> 0.1"},
+      {:stein_mfa, git: "https://github.com/smartlogic/stein_mfa.git", ref: "donald-toplevel"},
       {:stein_storage, git: "https://github.com/smartlogic/stein_storage.git"}
     ]
   end

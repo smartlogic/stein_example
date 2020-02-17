@@ -29,6 +29,8 @@ defmodule SteinExample.Users.User do
     field(:avatar_key, Ecto.UUID)
     field(:avatar_extension, :string)
 
+    has_many :mfa_methods, SteinExample.Users.MFAMethod
+
     timestamps()
   end
 

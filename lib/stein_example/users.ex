@@ -8,6 +8,8 @@ defmodule SteinExample.Users do
   alias SteinExample.Repo
   alias SteinExample.Users.Avatar
   alias SteinExample.Users.User
+  alias SteinExample.Users.MFAMethod
+
   alias Stein.Accounts
 
   @doc """
@@ -156,5 +158,33 @@ defmodule SteinExample.Users do
   """
   def reset_password(token, params) do
     Stein.Accounts.reset_password(Repo, User, token, params)
+  end
+
+  @doc """
+  Create's an inactive MFA method of the given type for user
+  """
+  def initialize_mfa_method(%User{} = user, type) do
+    secret = Stein.MFA.create_secret_for_user(user.email, type)
+
+    Repo.insert(%MFAMethod{
+      type: secret.type,
+      secret: secret.secret_value,
+      user_id: user.id,
+      active: false
+    })
+  end
+
+  @doc """
+  Marks given MFA method active. Used when completing enrollment
+  """
+  def activate_mfa_method(%MFAMethod{} = mfa) do
+    Repo.update(MFAMethod.activate_changeset(mfa))
+  end
+
+  @doc """
+  Deletes given MFA method
+  """
+  def delete_mfa_method(%MFAMethod{} = mfa) do
+    Repo.delete(mfa)
   end
 end
