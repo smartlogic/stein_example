@@ -48,6 +48,7 @@ defmodule Web.Router do
     pipe_through([:browser, :logged_in])
 
     resources("/profile", ProfileController, singleton: true, only: [:show, :edit, :update])
+    resources("/profile/mfa", MFAController, only: [:create, :delete])
   end
 
   if Mix.env() == :dev do
