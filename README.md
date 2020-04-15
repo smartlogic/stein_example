@@ -14,8 +14,22 @@ Docker is set up as a replication of production. This generates an erlang releas
 docker-compose pull
 docker-compose build
 docker-compose up -d postgres
-docker-compose run --rm app eval "SteinExample.ReleaseTasks.migrate()"
+docker-compose run --rm app eval "SteinExample.ReleaseTasks.Migrate.run()"
 docker-compose up app
 ```
 
 You now can view `http://localhost:4000` and access the application.
+
+## Heroku
+
+Buildpacks required:
+
+- https://github.com/HashNuke/heroku-buildpack-elixir.git
+- https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+- https://github.com/oestrich/heroku-buildpack-elixir-mix-release.git
+
+To migrate on heroku:
+
+```bash
+heroku run 'stein_example eval "SteinExample.ReleaseTasks.Migrate.run()"'
+```
