@@ -6,18 +6,11 @@ defmodule SteinExample.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
       SteinExample.Repo,
-      # Start the endpoint when the application starts
       Web.Endpoint
-      # Starts a worker by calling: SteinExample.Worker.start_link(arg)
-      # {SteinExample.Worker, arg},
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SteinExample.Supervisor]
     Supervisor.start_link(children, opts)
   end

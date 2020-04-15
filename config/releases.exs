@@ -1,9 +1,6 @@
 import Config
 
-config :stein_example, SteinExample.Repo,
-  ssl: true,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+config :stein_example, SteinExample.Repo, ssl: true
 
 config :stein_example, Web.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT"))],
