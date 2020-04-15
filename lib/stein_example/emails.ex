@@ -3,6 +3,8 @@ defmodule SteinExample.Emails do
 
   use Bamboo.Phoenix, view: SteinExample.Emails.EmailView
 
+  import Web.Gettext, only: [gettext: 1]
+
   alias Web.Endpoint
   alias Web.Router.Helpers, as: Routes
 
@@ -11,7 +13,7 @@ defmodule SteinExample.Emails do
 
     base_email()
     |> to(user.email)
-    |> subject("Welcome to Stein!")
+    |> subject("Welcome to #{gettext("SteinExample")}!")
     |> assign(:confirm_url, confirm_url)
     |> render(:welcome)
   end
@@ -31,7 +33,7 @@ defmodule SteinExample.Emails do
 
     base_email()
     |> to(user.email)
-    |> subject("Password reset for SteinExample")
+    |> subject("Password reset for #{gettext("SteinExample")}")
     |> render("password-reset.html", reset_url: reset_url)
   end
 
@@ -45,5 +47,7 @@ defmodule SteinExample.Emails do
 
     use Phoenix.View, root: "lib/stein_example/emails/templates", path: ""
     use Phoenix.HTML
+
+    import Web.Gettext, only: [gettext: 1]
   end
 end

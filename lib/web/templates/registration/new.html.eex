@@ -4,7 +4,7 @@
       <div class="card-body p-0">
         <div class="p-5">
           <div class="text-center">
-            <h1 class="h4 text-gray-900 mb-4">Register for Stein</h1>
+            <h1 class="h4 text-gray-900 mb-4">Register for <%= gettext("SteinExample") %></h1>
           </div>
           <%= form_for(@changeset, Routes.registration_path(@conn, :create), [multipart: true], fn f -> %>
             <%= FormView.text_field(f, :email) %>

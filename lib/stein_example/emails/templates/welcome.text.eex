@@ -1,4 +1,4 @@
-Welcome to Stein
+Welcome to <%= gettext("SteinExample") %>!
 
 Please verify your email, copy the link below.
 

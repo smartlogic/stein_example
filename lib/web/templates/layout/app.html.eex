@@ -4,10 +4,10 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Stein Example</title>
+    <title><%= gettext("SteinExample") %></title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
 
-    <meta property="og:site_name" content="Stein Example" />
+    <meta property="og:site_name" content="<%= gettext("SteinExample") %>" />
 
     <%= if Map.has_key?(assigns, :open_graph_title) do %>
       <meta property="og:title" content="<%= @open_graph_title %>" />
@@ -26,7 +26,7 @@
       <nav class="navbar navbar-expand-md" role="menubar">
         <div class="container">
           <%= link(to: Routes.page_path(@conn, :index), class: "navbar-brand") do %>
-            Stein Example
+            <%= gettext("SteinExample") %>
           <% end %>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

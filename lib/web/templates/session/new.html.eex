@@ -4,7 +4,7 @@
       <div class="card-body p-0">
         <div class="row h-100">
           <div class="col-lg-6 my-auto">
-            <h1 class="text-center my-auto">Stein Example</h1>
+            <h1 class="text-center my-auto"><%= gettext("SteinExample") %></h1>
           </div>
           <div class="col-lg-6">
             <div class="p-5">

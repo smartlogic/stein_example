@@ -1,5 +1,5 @@
-<h3>Welcome to Stein</h3>
+<h3>Welcome to <%= gettext("SteinExample") %></h3>
 
-<p>Please verify your email, head on over to <%= link("Stein", to: @confirm_url) %> or copy the link below.</p>
+<p>Please verify your email, head on over to <%= link(gettext("SteinExample"), to: @confirm_url) %> or copy the link below.</p>
 
 <code><%= @confirm_url %></code>
