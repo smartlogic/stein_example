@@ -13,8 +13,6 @@ config :stein_example,
 
 # Configures the endpoint
 config :stein_example, Web.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "yW/yP/NZJMq20vED3uJQwVzfLC9tElRDtwmmOeIYOnzIb5Dh9jsJk6A41lHZ1HlV",
   render_errors: [view: Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: SteinExample.PubSub, adapter: Phoenix.PubSub.PG2]
 
@@ -28,6 +26,6 @@ config :phoenix, :json_library, Jason
 
 config :stein_phoenix, :views, error_helpers: Web.ErrorHelpers
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+if File.exists?("config/#{Mix.env()}.exs") do
+  import_config "#{Mix.env()}.exs"
+end
