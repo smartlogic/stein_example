@@ -6,6 +6,18 @@ This is an example Phoenix application that uses [Stein](https://github.com/smar
 
 You can also clone this repo as a starting point for a new project to get going quickly.
 
+## Using as a template
+
+```bash
+git grep -l SteinExample | xargs sed -i 's/SteinExample/MyApp/g'
+git grep -l stein_example | xargs sed -i 's/stein_example/my_app/g'
+git mv lib/{stein_example,my_app}
+git mv lib/{stein_example,my_app}.ex
+git mv test/{stein_example,my_app}
+rm -rf .git
+git init .
+```
+
 ## Docker locally
 
 Docker is set up as a replication of production. This generates an erlang release and is not intended for development purposes.
