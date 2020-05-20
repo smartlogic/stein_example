@@ -7,6 +7,8 @@ defmodule SteinExample.Application do
 
   def start(_type, _args) do
     children = [
+      # Start the PubSub system
+      {Phoenix.PubSub, name: SteinExample.PubSub},
       SteinExample.Repo,
       Web.Endpoint
     ]

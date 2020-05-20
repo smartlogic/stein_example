@@ -14,7 +14,7 @@ config :stein_example,
 # Configures the endpoint
 config :stein_example, Web.Endpoint,
   render_errors: [view: Web.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SteinExample.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: SteinExample.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
