@@ -1,5 +1,11 @@
 use Mix.Config
 
+#
+# If you're looking to update variables, you probably want to:
+# - Edit `.env.test`
+# - Add to `SteinExample.Config` for loading through Vapor
+#
+
 # Configure your database
 config :stein_example, SteinExample.Repo, pool: Ecto.Adapters.SQL.Sandbox
 

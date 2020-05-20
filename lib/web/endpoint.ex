@@ -1,8 +1,7 @@
 defmodule Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :stein_example
 
-  alias Vapor.Provider.Dotenv
-  alias Vapor.Provider.Env
+  alias SteinExample.Config
 
   socket "/socket", Web.UserSocket,
     websocket: true,
@@ -53,29 +52,11 @@ defmodule Web.Endpoint do
   plug Web.Router
 
   def init(_type, config) do
-    providers = [
-      %Dotenv{},
-      %Env{
-        bindings: [
-          port: "PORT",
-          secret_key_base: "SECRET_KEY_BASE",
-          url_host: "HOST",
-          url_port: "URL_PORT",
-          url_scheme: "URL_SCHEME"
-        ]
-      }
-    ]
-
-    translations = [
-      port: fn s -> String.to_integer(s) end,
-      url_port: fn s -> String.to_integer(s) end
-    ]
-
-    vapor_config = Vapor.load!(providers, translations)
+    vapor_config = Config.endpoint()
 
     config =
       Keyword.merge(config,
-        http: [port: vapor_config.port],
+        http: [port: vapor_config.http_port],
         secret_key_base: vapor_config.secret_key_base,
         url: [
           host: vapor_config.url_host,

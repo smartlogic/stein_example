@@ -9,6 +9,7 @@ defmodule SteinExample.Application do
     children = [
       # Start the PubSub system
       {Phoenix.PubSub, name: SteinExample.PubSub},
+      SteinExample.Config.Cache,
       SteinExample.Repo,
       Web.Endpoint
     ]
