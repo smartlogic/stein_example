@@ -1,0 +1,86 @@
+version: 2.1
+
+jobs:
+  setup:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.9
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: cp config/test.circle.exs config/test.extra.exs
+      - restore_cache:
+          keys:
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+      - run: mix do deps.get, compile
+      - run: mix compile --force --warnings-as-errors
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+
+  lint:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.9
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: cp config/test.circle.exs config/test.extra.exs
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run: mix format --check-formatted
+      - run: mix credo --all --format=oneline
+
+  test:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.9
+        environment:
+          MIX_ENV: test
+      - image: circleci/postgres:12
+        environment:
+          POSTGRES_DB: stein_example_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: cp config/test.circle.exs config/test.extra.exs
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mix ecto.migrate
+      - run: mix test
+
+workflows:
+  build-and-test-web:
+    jobs:
+      - setup
+      - lint:
+          requires:
+            - setup
+      - test:
+          requires:
+            - setup
