@@ -3,7 +3,7 @@ set -e
 
 rm -rf tmp/build
 mkdir -p tmp/build
-git archive --format=tar master | tar x -C tmp/build/
+git archive --format=tar main | tar x -C tmp/build/
 cd tmp/build
 
 docker build -f Dockerfile.releaser -t stein_example:releaser .
