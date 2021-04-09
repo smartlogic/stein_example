@@ -4,17 +4,21 @@ services:
   app:
     build: .
     environment:
+      DATABASE_SSL: "false"
       DATABASE_URL: "postgesql://stein:password@postgres/stein_example"
       HOST: "example.com"
-      PORT: 4000
       POOL_SIZE: 5
+      PORT: 4000
+      SECRET_KEY_BASE: "nSUzQ0L9DLDjAacQZKnG11NAZf+26wU75zVGKq4FxUgRRMeorJA7Os2giqvBINiN"
+      URL_PORT: 4000
+      URL_SCHEME: "http"
     depends_on:
       - postgres
     ports:
       - 4000:4000
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:13-alpine
     environment:
       POSTGRES_DB: stein_example
       POSTGRES_PASSWORD: password
