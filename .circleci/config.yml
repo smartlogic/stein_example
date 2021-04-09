@@ -1,0 +1,134 @@
+version: 2.1
+
+jobs:
+  setup:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.11.4-node
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - restore_cache:
+          keys:
+            - v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+            - v1-yarn-cache-{{ .Branch }}
+            - v1-yarn-cache
+      - restore_cache:
+          keys:
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+      - run: mix do deps.get, compile
+      - run: cd assets && yarn && cd ..
+      - save_cache:
+          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+          paths: "assets/node_modules"
+      - save_cache:
+          key: v1-yarn-cache-{{ .Branch }}
+          paths: "assets/node_modules"
+      - save_cache:
+          key: v1-yarn-cache
+          paths: "assets/node_modules"
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:
+          key: v1-mix-cache
+          paths: "deps"
+      - save_cache:
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache:
+          key: v1-build-cache
+          paths: "_build"
+
+  lint:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.11.4-node
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - restore_cache:
+          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run: mix compile --force --warnings-as-errors
+      - run: mix deps.audit --ignore-package-names sweet_xml
+      - run: mix format --check-formatted
+      - run: mix credo --all --format=oneline
+
+  test:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.11.4-node
+        environment:
+          MIX_ENV: test
+      - image: postgres:13.2
+        environment:
+          POSTGRES_DB: stein_example_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - restore_cache:
+          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mix ecto.migrate
+      - run: mix test
+
+  assets:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.11.4-node
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - restore_cache:
+          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run: cd assets && yarn run build && cd ..
+      - run: mix phx.digest
+
+workflows:
+  test:
+    jobs:
+      - setup
+      - lint:
+          requires:
+            - setup
+      - test:
+          requires:
+            - setup
+      - assets:
+          requires:
+            - setup
