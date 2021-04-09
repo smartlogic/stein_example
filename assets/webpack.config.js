@@ -31,15 +31,28 @@ module.exports = (env, options) => ({
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              esModule: false,
+            },
+          },
+          'css-loader'
+        ]
       },
       {
-        test: /\.scss$/,
+        test: /\.s[ac]ss$/i,
         use: [
-          'style-loader', // creates style nodes from JS strings
-          MiniCssExtractPlugin.loader,
-          'css-loader', // translates CSS into CommonJS
-          'sass-loader' // compiles Sass to CSS, using Node Sass by default
+          'style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              esModule: false,
+            },
+          },
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
@@ -58,7 +71,11 @@ module.exports = (env, options) => ({
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'static/', to: '../' }
+      ]
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
