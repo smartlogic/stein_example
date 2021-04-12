@@ -1,43 +1,33 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body p-0">
-        <div class="p-5">
-          <h1 class="h4 text-gray-900 mb-4">Update your profile</h1>
+<div class="bg-gray-200 p-8 rounded">
+  <div class="flex flex-row">
+    <div class="w-1/2 m-4">
+      <h1 class="text-xl text-gray-900 mb-4">Update Your Profile</h1>
 
-          <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, multipart: true], fn f -> %>
-            <%= FormView.text_field(f, :email) %>
+      <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, multipart: true, class: "form"], fn f -> %>
+        <%= FormView.text_field(f, :email) %>
 
-            <%= FormView.text_field(f, :first_name) %>
+        <%= FormView.text_field(f, :first_name) %>
 
-            <%= FormView.text_field(f, :last_name) %>
+        <%= FormView.text_field(f, :last_name) %>
 
-            <%= FormView.file_field(f, :avatar) %>
+        <%= FormView.file_field(f, :avatar) %>
 
-            <%= FormView.submit_button("Update") %>
-          <% end) %>
-        </div>
-      </div>
+        <%= FormView.submit_button("Update") %>
+      <% end) %>
     </div>
-  </div>
 
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body p-0">
-        <div class="p-5">
-          <h1 class="h4 text-gray-900 mb-4">Change your password</h1>
+    <div class="w-1/2 m-4">
+      <h1 class="text-xl text-gray-900 mb-4">Change your password</h1>
 
-          <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put], fn f -> %>
-            <%= FormView.password_field(f, :current_password, label: "Current") %>
+      <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, class: "form"], fn f -> %>
+        <%= FormView.password_field(f, :current_password, label: "Current") %>
 
-            <%= FormView.password_field(f, :password) %>
+        <%= FormView.password_field(f, :password) %>
 
-            <%= FormView.password_field(f, :password_confirmation, label: "Confirmation") %>
+        <%= FormView.password_field(f, :password_confirmation, label: "Confirmation") %>
 
-            <%= FormView.submit_button("Update") %>
-          <% end) %>
-        </div>
-      </div>
+        <%= FormView.submit_button("Update") %>
+      <% end) %>
     </div>
   </div>
 </div>

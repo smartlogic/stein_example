@@ -1,31 +1,17 @@
-<div class="row justify-content-center">
-  <div class="col-xl-10 col-lg-12 col-md-9">
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
-        <div class="row h-100">
-          <div class="col-lg-6 my-auto">
-            <h1 class="text-center my-auto"><%= gettext("SteinExample") %></h1>
-          </div>
-          <div class="col-lg-6">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-              </div>
-              <%= form_for(@changeset, Routes.session_path(@conn, :create), fn f -> %>
-                <div class="form-group">
-                  <%= text_input(f, :email, type: :email, class: "form-control", placeholder: "Email") %>
-                </div>
-                <div class="form-group">
-                  <%= password_input(f, :password, class: "form-control", placeholder: "Password") %>
-                </div>
-                <%= submit("Login", class: "btn btn-primary") %>
-                <%= link("Register", to: Routes.registration_path(@conn, :new), class: "btn btn-default") %>
-                <%= link("Forgot Password?", to: Routes.registration_reset_path(@conn, :new), class: "btn btn-default") %>
-              <% end) %>
-            </div>
-          </div>
-        </div>
+<h1 class="w-full text-center text-white text-2xl pb-8"><%= gettext("SteinExample") %></h1>
+
+<div class="flex justify-center w-full flex-wrap">
+  <div class="md:w-1/2">
+    <%= form_for(@changeset, Routes.session_path(@conn, :create), [class: "form"], fn f -> %>
+      <%= FormView.text_field(f, :email, type: :email) %>
+
+      <%= FormView.password_field(f, :password) %>
+
+      <div class="flex flex-col md:flex-row items-center md:justify-between">
+        <%= submit("Login", class: "btn-primary") %>
+        <%= link("Register", to: Routes.registration_path(@conn, :new), class: "text-sm btn-secondary mt-1 md:mt-0") %>
+        <%= link("Forgot Password?", to: Routes.registration_reset_path(@conn, :new), class: "text-sm btn-secondary mt-1 md:mt-0") %>
       </div>
-    </div>
+    <% end) %>
   </div>
 </div>

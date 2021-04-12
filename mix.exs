@@ -50,7 +50,6 @@ defmodule SteinExample.MixProject do
       {:porcelain, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:stein, "~> 0.5"},
-      {:stein_phoenix, "~> 0.1"},
       {:stein_storage, git: "https://github.com/smartlogic/stein_storage.git"},
       {:vapor, "~> 0.10.0"}
     ]

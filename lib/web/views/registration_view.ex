@@ -3,5 +3,5 @@ defmodule Web.RegistrationView do
 
   import Web.Gettext, only: [gettext: 1]
 
-  alias Stein.Phoenix.Views.FormView
+  alias Web.FormView
 end

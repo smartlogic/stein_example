@@ -2,7 +2,7 @@ defmodule Web.ProfileView do
   use Web, :view
 
   alias SteinExample.Users.Avatar
-  alias Stein.Phoenix.Views.FormView
+  alias Web.FormView
 
   def full_name(user), do: "#{user.first_name} #{user.last_name}"
 

@@ -1,5 +1,5 @@
 defmodule Web.RegistrationResetView do
   use Web, :view
 
-  alias Stein.Phoenix.Views.FormView
+  alias Web.FormView
 end
