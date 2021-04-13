@@ -18,6 +18,13 @@ rm -rf .git
 git init .
 ```
 
+**On a Mac**
+The first two lines of above will likely need to be changed to the following to work:
+```bash
+git grep -l SteinExample | xargs sed -i '' 's/SteinExample/MyApp/g'
+git grep -l stein_example | xargs sed -i '' 's/stein_example/my_app/g'
+```
+
 ## Docker locally
 
 Docker is set up as a replication of production. This generates an erlang release and is not intended for development purposes.
