@@ -1,0 +1,11 @@
+deployer: "deploy"
+
+apps_dir: "/home/{{ deployer }}/apps"
+app_path: "{{ apps_dir }}/stein_example"
+
+current_release_path: "{{ app_path }}/current"
+releases_path: "{{ app_path }}/releases"
+shared_path: "{{ app_path }}/shared"
+release_env: staging
+
+release_path: "{{ releases_path }}/{{ ansible_date_time.iso8601_basic_short }}"

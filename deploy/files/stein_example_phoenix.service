@@ -1,0 +1,18 @@
+[Unit]
+Description=SteinExample Elixir Application
+After=network.target
+
+[Service]
+User=deploy
+Group=deploy
+WorkingDirectory=/home/deploy/apps/stein_example/current
+Environment=LANG=en_US.UTF-8
+EnvironmentFile=/etc/stein_example.env
+ExecStart=/home/deploy/apps/stein_example/current/bin/stein_example start
+SyslogIdentifier=stein_example
+RemainAfterExit=no
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

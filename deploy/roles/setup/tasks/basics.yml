@@ -1,0 +1,58 @@
+---
+- name: basic packages
+  apt:
+    pkg:
+      - acl
+      - htop
+      - postgresql-client
+    state: present
+    force: "yes"
+    update_cache: "yes"
+  become: true
+
+- name: make stein_example directory
+  file:
+    dest: /home/deploy/apps/stein_example
+    state: directory
+  become: yes
+  become_user: deploy
+
+- name: make current directory
+  file:
+    dest: /home/deploy/apps/stein_example/current
+    state: directory
+  become: yes
+  become_user: deploy
+
+- name: make releases directory
+  file:
+    dest: /home/deploy/apps/stein_example/releases
+    state: directory
+  become: yes
+  become_user: deploy
+
+- name: make shared directory
+  file:
+    dest: /home/deploy/apps/stein_example/shared
+    state: directory
+  become: yes
+  become_user: deploy
+
+- name: copy systemd file
+  copy:
+    src: stein_example_phoenix.service
+    dest: /etc/systemd/system/stein_example_phoenix.service
+  become: yes
+  notify: reload systemd
+
+- name: copy config file
+  copy:
+    src: "{{ stein_example_vapor_file }}"
+    dest: /etc/stein_example.env
+  become: yes
+
+- name: enable stein_example phoenix service
+  systemd:
+    name: stein_example_phoenix.service
+    enabled: yes
+  become: yes

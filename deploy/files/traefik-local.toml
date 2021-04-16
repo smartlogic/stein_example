@@ -1,0 +1,16 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[providers]
+  [providers.file]
+     directory = "/opt/traefik/config"
+     watch = true
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+[api]
+  dashboard = true
+  insecure = true

@@ -1,0 +1,14 @@
+---
+stein_example_vapor_file: "{{ playbook_dir }}/files/stein_example.local.env"
+
+firewall_ports:
+  - rule: allow
+    port: http
+  - rule: allow
+    port: https
+  - rule: allow
+    port: ssh
+
+traefik_config: "{{ playbook_dir }}/files/traefik-local.toml"
+traefik_config_files:
+  - "{{ playbook_dir }}/files/traefik-local-phoenix.toml"

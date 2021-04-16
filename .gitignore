@@ -35,3 +35,9 @@ npm-debug.log
 
 /tmp/
 /uploads/
+
+# Deployment
+/.vagrant/
+/deploy/collections/
+/deploy/galaxy-roles/
+/deploy/tmp/

@@ -1,0 +1,6 @@
+---
+- include_tasks: user.yml
+  when: action == "basics"
+
+- include_tasks: basics.yml
+  when: action == "basics"

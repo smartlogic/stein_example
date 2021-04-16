@@ -1,0 +1,50 @@
+---
+
+- name: "Generate release"
+  run_once: true
+  local_action: command {{ playbook_dir }}/../release.sh
+
+- name: "Copy file to server"
+  copy:
+    src: "{{ playbook_dir }}/tmp/stein_example.tar.gz"
+    dest: /tmp/stein_example.tar.gz
+
+- name: ensure release directory
+  file:
+    path: "{{ release_path }}"
+    state: directory
+  become: true
+  become_user: "{{ deployer }}"
+
+- name: unarchive to working directory
+  unarchive:
+    src: "/tmp/stein_example.tar.gz"
+    dest: "{{ release_path }}"
+    remote_src: true
+  become: true
+  become_user: "{{ deployer }}"
+
+- name: symlink sitemap to current
+  file:
+    path: "{{ release_path }}/sitemap"
+    src: "{{ shared_path }}/sitemap"
+    state: "link"
+    force: yes
+  become: true
+  become_user: "{{ deployer }}"
+
+- name: run migrations
+  shell: "export $(cat /etc/stein_example.env | xargs) && {{ release_path }}/bin/stein_example eval \"SteinExample.ReleaseTasks.Migrate.run()\""
+  run_once: true
+  become: true
+  become_user: "{{ deployer }}"
+
+- name: symlink to current
+  file:
+    path: "{{ current_release_path }}"
+    src: "{{ release_path }}"
+    state: "link"
+    force: yes
+  notify: "restart stein_example phoenix"
+  become: true
+  become_user: "{{ deployer }}"

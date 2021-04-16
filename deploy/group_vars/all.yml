@@ -1,0 +1,16 @@
+---
+
+github_keys_install_user: deploy
+github_keys_create_install_user: false
+github_keys_github_orgs:
+  - smartlogic
+
+postgresql_python_library: python3-psycopg2
+
+postgresql_databases:
+  - name: stein_example
+    owner: deploy
+
+postgresql_users:
+  - name: deploy
+    password: deploy
