@@ -4,6 +4,26 @@ This is an example Phoenix application that uses [Stein](https://github.com/smar
 
 You can also clone this repo as a starting point for a new project to get going quickly.
 
+## Setup
+
+Install PostgreSQL through your package manager of choice, or if you're on MacOS you can use [Postgres.app](https://postgresapp.com/). Make sure to have **PostgreSQL 12** or above.
+
+Install Elixir, Erlang, and NodeJS through [asdf](https://asdf-vm.com/#/) using the versions supplied in `.tool-versions`. Once you have asdf, you can install them all with `asdf install` from the root of the project.
+
+```bash
+# Install Erlang/Elixir/NodeJS
+asdf install
+# Install yarn if required
+npm install -g yarn
+
+mix deps.get
+mix ecto.setup
+(cd assets && yarn install)
+iex -S mix phx.server
+```
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser. See `priv/repo/seeds.exs` for seeded accounts.
+
 ## Using as a template
 
 ```bash
