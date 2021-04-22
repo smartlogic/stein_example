@@ -83,7 +83,6 @@ jobs:
       - checkout
       - run: mix local.hex --force
       - run: mix local.rebar --force
-      - run: cp .env.circleci .env.test
       - restore_cache:
           key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
       - restore_cache:
@@ -91,6 +90,7 @@ jobs:
       - restore_cache:
           key: v1-build-cache-{{ .Branch }}
       - run: cd assets && yarn lint:ci
+      - run: cd assets && yarn lint:style:ci
 
   test:
     parallelism: 1
