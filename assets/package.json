@@ -4,6 +4,8 @@
   "scripts": {
     "build": "webpack --mode development",
     "deploy": "webpack --mode production",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --max-warnings 0",
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
@@ -26,9 +28,13 @@
     "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^8.1.0",
     "css-loader": "^5.2.0",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^1.4.1",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "prettier": "^2.2.1",
     "sass-loader": "^11.0.0",
     "style-loader": "^2.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",

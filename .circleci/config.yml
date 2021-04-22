@@ -73,6 +73,25 @@ jobs:
       - run: mix format --check-formatted
       - run: mix credo --all --format=oneline
 
+  lint-js:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.11.4-node
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: cp .env.circleci .env.test
+      - restore_cache:
+          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
+      - restore_cache:
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - restore_cache:
+          key: v1-build-cache-{{ .Branch }}
+      - run: cd assets && yarn lint:ci
+
   test:
     parallelism: 1
     docker:
@@ -124,6 +143,9 @@ workflows:
     jobs:
       - setup
       - lint:
+          requires:
+            - setup
+      - lint-js:
           requires:
             - setup
       - test:

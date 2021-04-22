@@ -24,6 +24,24 @@ iex -S mix phx.server
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser. See `priv/repo/seeds.exs` for seeded accounts.
 
+## Testing
+
+In order to verify our application, we have a series of tests that run in CI. Below is a list of them individually.
+
+```bash
+mix format --check-formatted
+mix compile --force --warnings-as-errors
+mix credo
+mix test
+(cd assets && yarn lint:ci)
+```
+
+Alternatively, you can run them all together with the verify script.
+
+```bash
+./verify.sh
+```
+
 ## Using as a template
 
 ```bash
