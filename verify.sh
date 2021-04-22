@@ -19,6 +19,7 @@ function lint() {
     mix compile --force --warnings-as-errors
     mix credo
     (cd assets && yarn lint:ci)
+    (cd assets && yarn lint:style:ci)
 }
 
 function test() {

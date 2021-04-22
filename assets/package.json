@@ -6,6 +6,8 @@
     "deploy": "webpack --mode production",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "lint:ci": "eslint '*/**/*.{js,ts,tsx}' --max-warnings 0",
+    "lint:style": "stylelint \"**/*.{css,scss}\" --fix",
+    "lint:style:ci": "stylelint \"**/*.{css,scss}\"",
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
@@ -37,6 +39,10 @@
     "prettier": "^2.2.1",
     "sass-loader": "^11.0.0",
     "style-loader": "^2.0.0",
+    "stylelint": "^13.12.0",
+    "stylelint-config-standard": "^21.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.19.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.0",
     "webpack": "^5.31.2",

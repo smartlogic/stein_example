@@ -1,13 +1,12 @@
 /* This file is for your main application css. */
 
 @tailwind base;
-
 @tailwind components;
 
 /* Put custom components here */
 
-
-html, body {
+html,
+body {
   @apply h-full;
 }
 

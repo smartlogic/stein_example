@@ -34,6 +34,7 @@ mix compile --force --warnings-as-errors
 mix credo
 mix test
 (cd assets && yarn lint:ci)
+(cd assets && yarn lint:style:ci)
 ```
 
 Alternatively, you can run them all together with the verify script.
