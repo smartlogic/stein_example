@@ -123,6 +123,14 @@ cd apps/stein_example/current
 ./bin/stein_example eval "SteinExample.ReleaseTasks.Migrate.run()"
 ```
 
+To seed on staging:
+
+```bash
+export $(cat /etc/stein_example.env | xargs)
+cd apps/stein_example/current
+./bin/stein_example eval "SteinExample.ReleaseTasks.Seeds.run()"
+```
+
 ### Docker locally
 
 Docker is set up as a replication of production. This generates an erlang release and is not intended for development purposes.
@@ -132,6 +140,7 @@ docker-compose pull
 docker-compose build
 docker-compose up -d postgres
 docker-compose run --rm app eval "SteinExample.ReleaseTasks.Migrate.run()"
+docker-compose run --rm app eval "SteinExample.ReleaseTasks.Seeds.run()"
 docker-compose up app
 ```
 

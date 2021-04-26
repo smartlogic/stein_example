@@ -28,6 +28,15 @@ defmodule SteinExample.ReleaseTasks do
     IO.puts("Starting repos..")
     Enum.each(@repos, & &1.start_link(pool_size: 2))
   end
+
+  def startup_extra() do
+    start(Web.Endpoint.start_link())
+    start(SteinExample.Config.Cache.start_link([]))
+  end
+
+  defp start({:ok, _pid}), do: :ok
+
+  defp start({:error, {:already_started, _pid}}), do: :ok
 end
 
 defmodule SteinExample.ReleaseTasks.Migrate do
@@ -59,4 +68,42 @@ defmodule SteinExample.ReleaseTasks.Migrate do
   end
 
   defp migrations_path(app), do: Path.join([priv_dir(app), "repo", "migrations"])
+end
+
+defmodule SteinExample.ReleaseTasks.Seeds do
+  @moduledoc """
+  Seed the database
+
+  NOTE: This should only be used in the docker compose or staging environments
+  """
+
+  alias SteinExample.ReleaseTasks
+
+  @apps [
+    :stein_example
+  ]
+
+  @doc """
+  Migrate the database
+  """
+  def run() do
+    ReleaseTasks.startup()
+    ReleaseTasks.startup_extra()
+    Enum.each(@apps, &run_seeds_for/1)
+    IO.puts("Success!")
+  end
+
+  def priv_dir(app), do: "#{:code.priv_dir(app)}"
+
+  defp run_seeds_for(app) do
+    # Run the seed script if it exists
+    seed_script = seeds_path(app)
+
+    if File.exists?(seed_script) do
+      IO.puts("Running seed script..")
+      Code.eval_file(seed_script)
+    end
+  end
+
+  defp seeds_path(app), do: Path.join([priv_dir(app), "repo", "seeds.exs"])
 end
