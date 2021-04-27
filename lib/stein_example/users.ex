@@ -3,6 +3,8 @@ defmodule SteinExample.Users do
   Users context
   """
 
+  import Ecto.Query
+
   alias SteinExample.Emails
   alias SteinExample.Mailer
   alias SteinExample.Repo
@@ -19,6 +21,23 @@ defmodule SteinExample.Users do
   Changeset for updating a user
   """
   def edit(user), do: Ecto.Changeset.change(user, %{})
+
+  def count() do
+    User
+    |> select([u], count(u))
+    |> Repo.one()
+  end
+
+  @doc """
+  Paginate users, primarily for the admin panel
+  """
+  def all(opts \\ []) do
+    opts = Enum.into(opts, %{})
+
+    User
+    |> order_by([u], desc: u.id)
+    |> Repo.paginate(opts[:page], opts[:per])
+  end
 
   @doc """
   Get a user by id

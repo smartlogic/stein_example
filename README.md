@@ -45,6 +45,8 @@ Alternatively, you can run them all together with the verify script.
 
 ## Using as a template
 
+**Note: You must follow through with the admin panel section**
+
 ```bash
 git grep -l SteinExample | xargs sed -i 's/SteinExample/MyApp/g'
 git grep -l stein_example | xargs sed -i 's/stein_example/my_app/g'
@@ -61,6 +63,10 @@ The first two lines of above will likely need to be changed to the following to 
 git grep -l SteinExample | xargs sed -i '' 's/SteinExample/MyApp/g'
 git grep -l stein_example | xargs sed -i '' 's/stein_example/my_app/g'
 ```
+
+### Admin Panel
+
+The app ships with the start of an admin panel. Something that you **must do** after getting it set up is add permissioning to the panel. Every signed in user can access the panel from first clone. This is on purpose because there are many styles of roles/permissions and each app will have their own.
 
 ### Deployment
 

@@ -14,6 +14,14 @@ iframe {
   display: none;
 }
 
+.page {
+  @apply bg-white p-8 rounded;
+}
+
+/**
+ * Navigation Elements
+ */
+
 .btn-primary {
   @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
 
@@ -58,8 +66,12 @@ nav .link {
   }
 }
 
+/**
+ * Forms
+ */
+
 .form {
-  @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+  @apply bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4;
 }
 
 .label {
@@ -102,6 +114,110 @@ nav .link {
 
     > *:nth-child(2) {
       @apply w-2/3;
+    }
+  }
+}
+
+/**
+ * Admin
+ */
+
+.admin {
+  .btn-primary {
+    @apply bg-blue-600 text-white font-bold py-2 px-2 rounded text-center ml-1;
+
+    &:focus {
+      @apply outline-none ring;
+    }
+
+    &:hover {
+      @apply bg-blue-700;
+    }
+  }
+
+  @screen md {
+    .btn-primary {
+      @apply px-4;
+    }
+
+    .btn-secondary {
+      @apply px-4;
+    }
+  }
+
+  .btn-secondary {
+    @apply bg-gray-400 text-white font-bold py-2 px-2 rounded text-center ml-1;
+
+    &:focus {
+      @apply outline-none ring;
+    }
+
+    &:hover {
+      @apply bg-gray-500;
+    }
+  }
+
+  a {
+    @apply text-blue-700;
+  }
+
+  nav a {
+    @apply block px-2 py-3 text-white bg-gray-700 border-l-4 border-gray-700;
+  }
+
+  nav a:hover {
+    @apply bg-gray-800 border-gray-800;
+  }
+
+  nav a.active {
+    @apply bg-gray-800 border-blue-400;
+  }
+
+  .page-header {
+    @apply flex flex-row items-center h-12;
+  }
+
+  .actions {
+    @apply flex-grow flex justify-end;
+  }
+
+  .panel {
+    @apply border-t-2 border-blue-600 rounded mt-2;
+  }
+
+  .panel-container {
+    @apply border border-gray-200 p-2 bg-white;
+  }
+
+  .table {
+    @apply table-fixed w-full mt-2;
+
+    th {
+      @apply px-4 py-2;
+    }
+
+    td {
+      @apply px-4 py-2;
+    }
+  }
+
+  .pagination {
+    @apply bg-white px-4 py-3 flex justify-end border-t border-gray-200;
+
+    @screen sm {
+      @apply px-6;
+    }
+  }
+
+  .page-link {
+    @apply relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700;
+
+    &.active {
+      @apply text-blue-400;
+    }
+
+    &.disabled {
+      @apply text-gray-300;
     }
   }
 }
