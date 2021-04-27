@@ -1,7 +1,7 @@
-<div class="bg-gray-200 p-8 rounded">
+<div class="page">
   <div class="flex flex-row">
     <div class="w-1/2 m-4">
-      <h1 class="text-xl text-gray-900 mb-4">Update Your Profile</h1>
+      <h2 class="text-2xl text-gray-900 mb-4">Update Your Profile</h2>
 
       <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, multipart: true, class: "form"], fn f -> %>
         <%= FormView.text_field(f, :email) %>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="w-1/2 m-4">
-      <h1 class="text-xl text-gray-900 mb-4">Change your password</h1>
+      <h2 class="text-2xl text-gray-900 mb-4">Change your password</h2>
 
       <%= form_for(@changeset, Routes.profile_path(@conn, :update), [method: :put, class: "form"], fn f -> %>
         <%= FormView.password_field(f, :current_password, label: "Current") %>

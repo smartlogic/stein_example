@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
-  <body class="bg-gray-300 font-sans leading-normal tracking-normal">
+  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <nav class="bg-blue-600 p-2 mt-0 fixed w-full z-10 top-0">
       <div class="container mx-auto flex flex-wrap items-center">
         <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
@@ -23,6 +23,9 @@
             <%= if Map.has_key?(assigns, :current_user) do %>
               <li class="mr-3">
                 <%= link("Profile", to: Routes.profile_path(@conn, :show), class: "link") %>
+              </li>
+              <li class="mr-3">
+                <%= link("Admin", to: Routes.admin_dashboard_path(@conn, :index), class: "link") %>
               </li>
               <li class="mr-3">
                 <%= link("Sign Out", to: Routes.session_path(@conn, :delete), method: :delete, class: "link") %>

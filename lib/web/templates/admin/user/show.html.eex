@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1 class="text-xl font-bold">
+    <%= link("Users", to: Routes.admin_user_path(@conn, :index)) %> &raquo;
+    <%= ProfileView.full_name(@user) %>
+  </h1>
+</div>
+
+<div class="panel">
+  <div class="panel-container">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <td><%= ProfileView.full_name(@user) %></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><%= @user.email %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
