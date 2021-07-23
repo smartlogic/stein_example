@@ -7,7 +7,7 @@ roles:
   - src: geerlingguy.postgresql
     version: 3.1.0
   - src: smartlogic.github_keys
-    version: 0.3.2
+    version: 1.0.0
   - src: https://github.com/smartlogic/ansible-role-traefik
     name: traefik
     version: 1.0.0
