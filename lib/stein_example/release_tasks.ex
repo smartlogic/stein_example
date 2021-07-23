@@ -10,6 +10,11 @@ defmodule SteinExample.ReleaseTasks do
     :ecto_sql
   ]
 
+  @start_extra_apps [
+    :gettext,
+    :ranch
+  ]
+
   @repos [
     SteinExample.Repo
   ]
@@ -30,6 +35,7 @@ defmodule SteinExample.ReleaseTasks do
   end
 
   def startup_extra() do
+    Enum.each(@start_extra_apps, &Application.ensure_all_started/1)
     start(Web.Endpoint.start_link())
     start(SteinExample.Config.Cache.start_link([]))
   end

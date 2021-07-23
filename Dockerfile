@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.11.4-erlang-23.2.7.2-alpine-3.13.3 as builder
+FROM hexpm/elixir:1.12.2-erlang-24.0.4-alpine-3.14.0 as builder
 
 # The nuclear approach:
 # RUN apk add --no-cache alpine-sdk
@@ -10,7 +10,7 @@ COPY mix.* /app/
 RUN mix deps.get --only prod
 RUN mix deps.compile
 
-FROM node:12.22 as frontend
+FROM node:14.17 as frontend
 WORKDIR /app
 COPY assets/package.json assets/yarn.lock /app/
 COPY --from=builder /app/deps/phoenix /deps/phoenix
@@ -25,8 +25,8 @@ COPY . /app/
 RUN mix phx.digest
 RUN mix release
 
-FROM alpine:3.13.3
-RUN apk add -U bash openssl
+FROM alpine:3.14.0
+RUN apk add -U bash openssl libgcc libstdc++
 WORKDIR /app
 COPY --from=releaser /app/_build/prod/rel/stein_example /app/
 ENV MIX_ENV=prod
