@@ -165,3 +165,58 @@ To migrate on heroku:
 ```bash
 heroku run 'stein_example eval "SteinExample.ReleaseTasks.Migrate.run()"'
 ```
+
+## Metrics
+
+A metric server will start on `http://localhost:4021/metrics`, set up for [Prometheus](https://prometheus.io/) scraping.
+
+If deploying via Heroku, you should remove the metric server config and host it via the `PromEx.Plug` through `Web.Endpoint`.
+
+If deploying via ansible, then port `4021` should be accessible via our metrics server.
+
+### Dashboards
+
+By default PromEx is not configured to upload dashboards to Grafana. For local development or the first time setting up dashboards on our metrics server, you can use the following ENV to confiugre PromEx to upload dashboards.
+
+```bash
+GRAFANA_API_TOKEN=api-token-that-is-an-editor
+GRAFANA_URL=http://localhost:3000
+GRAFANA_UPLOAD_DASHBOARDS=true
+GRAFANA_DATASOURCE_ID=datasource-id-for-prometheus
+```
+
+Afterwards on boot PromEx will upload the configured dashboards to the Grafana server.
+
+### Prometheus Job
+
+To configure our Prometheus to scrape the server, setup a new file config similar to below. Make sure to update `client`, `product`, and `datacenter` with the appropriate label values.
+
+```json
+[
+  {
+    "targets" : [
+      "ip:4021"
+    ],
+    "labels" : {
+      "job" : "app",
+      "client" : "product",
+      "datacenter" : "aws-us-east",
+      "product" : "product",
+      "environment" : "staging"
+    }
+  },
+  {
+    "targets" : [
+      "ip:4021",
+      "ip:4021"
+    ],
+    "labels" : {
+      "job" : "app",
+      "client" : "client",
+      "datacenter" : "aws-us-east",
+      "product" : "product",
+      "environment" : "production"
+    }
+  }
+]
+```
