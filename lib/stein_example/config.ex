@@ -6,8 +6,11 @@ defmodule SteinExample.Config do
   and phoenix endpoint config.
   """
 
+  alias SteinExample.Config.Cache
   alias Vapor.Provider.Dotenv
   alias Vapor.Provider.Env
+
+  defdelegate grafana_datasource_id(), to: Cache
 
   @doc """
   Load and parse application configuration
@@ -18,8 +21,39 @@ defmodule SteinExample.Config do
 
   # Fill this in:
   defp application_providers() do
-    []
+    [
+      %Dotenv{},
+      %Env{
+        bindings: [
+          {:grafana_datasource_id, "GRAFANA_DATASOURCE_ID", required: false},
+        ]
+      }
+    ]
   end
+
+  @doc """
+  Load and parse grafana configuration
+  """
+  def grafana() do
+    Vapor.load!(grafana_providers())
+  end
+
+  defp grafana_providers() do
+    [
+      %Dotenv{},
+      %Env{
+        bindings: [
+          {:auth_token, "GRAFANA_API_TOKEN", required: false},
+          {:host, "GRAFANA_URL", required: false},
+          {:upload_dashboards_on_start, "GRAFANA_UPLOAD_DASHBOARDS", required: false, map: &boolean/1}
+        ]
+      }
+    ]
+  end
+
+  defp boolean("true"), do: true
+
+  defp boolean(_), do: false
 
   @doc """
   Load and parse database configuration
@@ -72,8 +106,7 @@ defmodule SteinExample.Config.Cache do
 
   alias SteinExample.Config
 
-  # Create accessors via
-  # def secret_key(), do: :persistent_term.get({__MODULE__, :secret_key})
+  def grafana_datasource_id(), do: :persistent_term.get({__MODULE__, :grafana_datasource_id})
 
   @doc false
   def start_link(opts) do

@@ -11,6 +11,13 @@ config :stein_example,
   namespace: Web,
   ecto_repos: [SteinExample.Repo]
 
+config :stein_example, SteinExample.PromEx,
+  disabled: false,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: :disabled,
+  metrics_server: [port: 4021]
+
 # Configures the endpoint
 config :stein_example, Web.Endpoint,
   render_errors: [view: Web.ErrorView, accepts: ~w(html json)],
