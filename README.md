@@ -86,7 +86,7 @@ If we're using ansible, run the following to template for the new application:
 
 ```bash
 git mv deploy/files/stein_example.local.env deploy/files/my_app.local.env
-git mv deploy/files/stein_example_phoenix.service deploy/files/my_app_phoenix.service
+git mv deploy/files/stein_example.service deploy/files/my_app.service
 ```
 
 #### Heroku

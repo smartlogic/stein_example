@@ -40,8 +40,8 @@
 
 - name: copy systemd file
   copy:
-    src: stein_example_phoenix.service
-    dest: /etc/systemd/system/stein_example_phoenix.service
+    src: stein_example.service
+    dest: /etc/systemd/system/stein_example.service
   become: yes
   notify: reload systemd
 
@@ -51,8 +51,8 @@
     dest: /etc/stein_example.env
   become: yes
 
-- name: enable stein_example phoenix service
+- name: enable stein_example service
   systemd:
-    name: stein_example_phoenix.service
+    name: stein_example.service
     enabled: yes
   become: yes
