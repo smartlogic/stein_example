@@ -7,7 +7,7 @@ git_repo="https://github.com/smartlogic/stein_example"
 # Generalized starts below
 
 ssh_user="deploy"
-ssh_options=""
+ssh_options=()
 ssh_port=22
 
 help_text=$(cat <<"HELP"
@@ -48,7 +48,7 @@ case "${1}" in
     environment=local
     ssh_host=127.0.0.1
     ssh_port=2222
-    ssh_options="-o StrictHostKeyChecking=no -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
+    ssh_options=(-o StrictHostKeyChecking=no -o PasswordAuthentication=no -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes)
     ;;
 
   *)
@@ -57,15 +57,15 @@ case "${1}" in
     ;;
 esac
 
-ssh_command="ssh ${ssh_host} -l ${ssh_user} -p ${ssh_port} ${ssh_options}"
+ssh_options=("${ssh_host}" -l "${ssh_user}" -p "${ssh_port}" "${ssh_options[@]}")
 
 case "${2}" in
   bash)
-    $ssh_command -t -C 'export $(cat /etc/stein_example.env | xargs) && bash'
+    ssh "${ssh_options[@]}" -t -C 'export $(cat /etc/stein_example.env | xargs) && bash'
     ;;
 
   diff)
-    git_sha=$(${ssh_command} -C 'cat apps/stein_example/current/REVISION')
+    git_sha=$(ssh "${ssh_options[@]}" -C 'cat apps/stein_example/current/REVISION')
     github_url="${git_repo}/compare/${git_sha}..main"
 
     cat <<GITDIFF
@@ -88,15 +88,15 @@ GITDIFF
     ;;
 
   iex)
-    ${ssh_command} -t -C "cd apps/stein_example/current && ./bin/stein_example remote"
+    ssh "${ssh_options[@]}" -t -C "cd apps/stein_example/current && ./bin/stein_example remote"
     ;;
 
   logs)
-    ${ssh_command} -t -C 'journalctl -u stein_example -f'
+    ssh "${ssh_options[@]}" -t -C 'journalctl -u stein_example -f'
     ;;
 
   psql)
-    ${ssh_command} -t -C 'source /etc/stein_example.env && psql $DATABASE_URL'
+    ssh "${ssh_options[@]}" -t -C 'source /etc/stein_example.env && psql $DATABASE_URL'
     ;;
 
   *)
