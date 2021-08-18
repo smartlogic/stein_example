@@ -24,12 +24,10 @@
   become: true
   become_user: "{{ deployer }}"
 
-- name: symlink sitemap to current
-  file:
-    path: "{{ release_path }}/sitemap"
-    src: "{{ shared_path }}/sitemap"
-    state: "link"
-    force: yes
+- name: "Copy REVISION to server"
+  copy:
+    src: "{{ playbook_dir }}/tmp/REVISION"
+    dest: "{{ release_path }}"
   become: true
   become_user: "{{ deployer }}"
 
