@@ -49,7 +49,7 @@ defmodule SteinExample.MixProject do
       {:plug_cowboy, "~> 2.2"},
       {:porcelain, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:prom_ex, git: "https://github.com/oestrich/prom_ex", branch: "metric-prefix-config"},
+      {:prom_ex, git: "https://github.com/akoutmos/prom_ex"},
       {:stein, "~> 0.5"},
       {:stein_storage, "~> 0.1"},
       {:vapor, "~> 0.10.0"}
