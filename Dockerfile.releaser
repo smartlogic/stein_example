@@ -18,9 +18,11 @@ COPY assets /app
 RUN npm run deploy
 
 FROM builder as releaser
+ARG GIT_SHA
 COPY --from=frontend /priv/static /app/priv/static
 COPY . /app/
 RUN mix phx.digest
 RUN mix release && \
   cd _build/prod/rel/stein_example/ && \
   tar czf /opt/stein_example.tar.gz .
+RUN echo $GIT_SHA > /opt/REVISION
