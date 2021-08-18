@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.12.2-erlang-24.0.4-ubuntu-xenial-20210114 as builder
+FROM hexpm/elixir:1.12.2-erlang-24.0.5-ubuntu-focal-20210325 as builder
 
 RUN apt-get update && apt-get install -y git build-essential
 RUN mix local.rebar --force && mix local.hex --force
