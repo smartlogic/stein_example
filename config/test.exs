@@ -17,6 +17,8 @@ config :stein_example, Web.Endpoint,
 
 config :stein_example, SteinExample.Mailer, adapter: Bamboo.TestAdapter
 
+config :stein_example, SteinExample.PromEx, metrics_server: :disabled
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

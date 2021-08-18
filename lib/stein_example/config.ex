@@ -25,7 +25,7 @@ defmodule SteinExample.Config do
       %Dotenv{},
       %Env{
         bindings: [
-          {:grafana_datasource_id, "GRAFANA_DATASOURCE_ID", required: false},
+          {:grafana_datasource_id, "GRAFANA_DATASOURCE_ID", required: false}
         ]
       }
     ]
@@ -45,7 +45,8 @@ defmodule SteinExample.Config do
         bindings: [
           {:auth_token, "GRAFANA_API_TOKEN", required: false},
           {:host, "GRAFANA_URL", required: false},
-          {:upload_dashboards_on_start, "GRAFANA_UPLOAD_DASHBOARDS", required: false, map: &boolean/1}
+          {:upload_dashboards_on_start, "GRAFANA_UPLOAD_DASHBOARDS",
+           required: false, map: &boolean/1}
         ]
       }
     ]
