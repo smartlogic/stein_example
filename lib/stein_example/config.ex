@@ -10,6 +10,8 @@ defmodule SteinExample.Config do
   alias Vapor.Provider.Dotenv
   alias Vapor.Provider.Env
 
+  defdelegate deploy_env(), to: Cache
+
   defdelegate grafana_datasource_id(), to: Cache
 
   @doc """
@@ -25,6 +27,7 @@ defmodule SteinExample.Config do
       %Dotenv{},
       %Env{
         bindings: [
+          {:deploy_env, "DEPLOY_ENV"},
           {:grafana_datasource_id, "GRAFANA_DATASOURCE_ID", required: false}
         ]
       }
@@ -106,6 +109,8 @@ defmodule SteinExample.Config.Cache do
   use GenServer
 
   alias SteinExample.Config
+
+  def deploy_env(), do: :persistent_term.get({__MODULE__, :deploy_env})
 
   def grafana_datasource_id(), do: :persistent_term.get({__MODULE__, :grafana_datasource_id})
 

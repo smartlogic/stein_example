@@ -1,11 +1,25 @@
-<h1 class="w-full text-center text-white text-2xl pb-8">Forgot your password?</h1>
+<div class="sm:mx-auto sm:w-full sm:max-w-md">
+  <%= img_tag("https://raw.githubusercontent.com/smartlogic/stein/master/stein.png", class: "mx-auto h-12 w-auto") %>
 
-<div class="flex justify-center w-full flex-wrap">
-  <div class="md:w-1/2">
-    <%= form_for(@changeset, Routes.registration_reset_path(@conn, :create), [class: "form"], fn f -> %>
-      <%= FormView.text_field(f, :email) %>
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    Forgot your password?
+  </h2>
+</div>
 
-      <%= FormView.submit_button("Reset") %>
+<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <%= form_for(@changeset, Routes.registration_reset_path(@conn, :create), [class: "space-y-6 mb-6"], fn f -> %>
+      <div>
+        <%= label(f, :email, class: "label") %>
+
+        <div class="mt-1">
+          <%= text_input(f, :email, required: true, autofocus: true, autocomplete: "email", class: "input") %>
+        </div>
+      </div>
+
+      <div>
+        <%= submit("Reset", class: "w-full btn-primary") %>
+      </div>
     <% end) %>
   </div>
 </div>
