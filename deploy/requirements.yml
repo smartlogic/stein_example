@@ -14,6 +14,9 @@ roles:
   - src: https://github.com/smartlogic/ansible-role-firewall
     name: firewall
     version: 0.1.2
+  - src: https://github.com/smartlogic/ansible-role-prometheus-exporters
+    name: prometheus-exporters
+    version: 0.5.3
 
 collections:
   - name: devsec.hardening

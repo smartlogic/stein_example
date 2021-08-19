@@ -1,4 +1,5 @@
 ---
+
 - name: Create the deploy user
   user:
     name: deploy

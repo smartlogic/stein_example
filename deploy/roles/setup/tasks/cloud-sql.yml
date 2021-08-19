@@ -1,0 +1,24 @@
+---
+
+- name: "Download Cloud SQL Auth Proxy"
+  get_url:
+    url: "https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64"
+    dest: "/opt/cloud_sql_proxy"
+    mode: 0755
+  become: yes
+
+- name: Template out the service file
+  template:
+    src: cloud-sql.service.j2
+    dest: /etc/systemd/system/cloud-sql.service
+    mode: 0644
+  become: yes
+  notify:
+    - reload systemd
+    - restart cloud-sql
+
+- name: Enable Cloud SQL Auth Proxy
+  systemd:
+    name: cloud-sql
+    enabled: yes
+  become: yes

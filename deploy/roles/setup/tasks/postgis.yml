@@ -1,0 +1,10 @@
+---
+
+- name: postgis packages
+  apt:
+    pkg:
+      - "{{ setup_postgis_version }}"
+    state: present
+    force: "yes"
+    update_cache: "yes"
+  become: true

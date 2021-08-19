@@ -9,13 +9,27 @@
     - { role: firewall, become: yes, tags: ["setup", "firewall"] }
     - { role: jnv.unattended-upgrades, become: yes, tags: ["upgrades"] }
     - { role: geerlingguy.ntp, become: yes, tags: ["ntp"] }
-    - { role: setup, action: "basics", tags: ["user"] }
+    - { role: setup, action: "packages", tags: ["packages", "setup"] }
+    - { role: setup, action: "user", tags: ["user", "setup"] }
     - { role: smartlogic.github_keys, tags: ["user"] }
-    - { role: traefik, tags: ["web"] }
+    - { role: prometheus-exporters, tags: ["prometheus"], actions: ["node_exporter"] }
 
-- name: Install postgres
+- name: Web server setup
+  gather_facts: yes
+  hosts:
+    - local
+  roles:
+    - { role: setup, action: "basics", tags: ["setup"] }
+
+- name: Staging simplification
   gather_facts: yes
   hosts:
     - local
   roles:
     - { role: geerlingguy.postgresql, become: yes, tags: ["postgres"] }
+    # - { role: setup, action: "postgis", tags: ["setup"] }
+    - { role: traefik, tags: ["web"] }
+
+# Anything specific to production servers, cloud-sql for instance
+#
+# Separate load balancer setup for production

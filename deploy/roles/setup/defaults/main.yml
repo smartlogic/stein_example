@@ -1,0 +1,5 @@
+---
+
+setup_cloud_sql_proxy_instance: cloud-sql
+
+setup_postgis_version: postgresql-12-postgis-3

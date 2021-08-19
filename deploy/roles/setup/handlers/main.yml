@@ -1,4 +1,9 @@
 ---
+
 - name: reload systemd
   command: systemctl daemon-reload
+  become: true
+
+- name: restart cloud-sql
+  command: systemctl restart cloud-sql
   become: true

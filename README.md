@@ -114,14 +114,13 @@ The `setup.yml` playbook installs and configures common components (ssh, ntp, fi
 
 The `deploy.yml` playbook generates a local release, copies it over to the application server, migrates, and restarts the application. This is in a similar setup to capistrano with release folders.
 
-In order to connect to a running service, ssh in as `deploy` and run the following:
+In order to connect to a running service, connect via the `remote.sh` script:
 
 ```bash
-cd apps/stein_example/current
-./bin/stein_example remote
+./scripts/remote.sh local iex
 ```
 
-If you want to run a release task manually:
+If you want to run a release task manually, ssh in as `deploy`:
 
 ```bash
 export $(cat /etc/stein_example.env | xargs)
@@ -136,6 +135,23 @@ export $(cat /etc/stein_example.env | xargs)
 cd apps/stein_example/current
 ./bin/stein_example eval "SteinExample.ReleaseTasks.Seeds.run()"
 ```
+
+#### Remote Script
+
+To help facilitate remote debugging, we have a script to start a remote IEx or psql session.
+
+```bash
+# To start a bash session
+./scripts/remote.sh production bash
+
+# To start an IEx session
+./scripts/remote.sh production iex
+
+# To start a psql session
+./scripts/remote.sh production psql
+```
+
+See `./scripts/remote.sh` for more of what it can do, as that help is more up to date.
 
 ### Docker locally
 

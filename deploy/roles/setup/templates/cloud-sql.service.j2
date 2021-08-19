@@ -1,0 +1,11 @@
+[Unit]
+Description=Cloud SQL Auth Proxy
+After=network-online.target
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/opt/
+ExecStart=/opt/cloud_sql_proxy -instances={{ setup_cloud_sql_proxy_instance }}=tcp:5432
+
+[Install]
+WantedBy=multi-user.target

@@ -1,14 +1,4 @@
 ---
-- name: basic packages
-  apt:
-    pkg:
-      - acl
-      - htop
-      - postgresql-client
-    state: present
-    force: "yes"
-    update_cache: "yes"
-  become: true
 
 - name: make stein_example directory
   file:
