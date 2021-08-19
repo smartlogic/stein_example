@@ -89,6 +89,8 @@ git mv deploy/files/stein_example.local.env deploy/files/my_app.local.env
 git mv deploy/files/stein_example.service deploy/files/my_app.service
 ```
 
+Update the `git_repo` variable in `./scripts/remote.sh`
+
 #### Heroku
 
 If we're not using heroku, delete the following:
