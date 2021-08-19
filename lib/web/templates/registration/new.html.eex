@@ -1,21 +1,59 @@
-<h1 class="w-full text-center text-white text-2xl pb-8">Register for <%= gettext("SteinExample") %></h1>
+<div class="sm:mx-auto sm:w-full sm:max-w-md">
+  <%= img_tag("https://raw.githubusercontent.com/smartlogic/stein/master/stein.png", class: "mx-auto h-12 w-auto") %>
 
-<div class="flex justify-center w-full flex-wrap">
-  <div class="md:w-1/2">
-    <%= form_for(@changeset, Routes.registration_path(@conn, :create), [multipart: true, class: "form"], fn f -> %>
-      <%= FormView.text_field(f, :email) %>
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    Register for <%= gettext("SteinExample") %>
+  </h2>
+</div>
 
-      <%= FormView.text_field(f, :first_name) %>
+<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <%= form_for(@changeset, Routes.registration_path(@conn, :create), [multipart: true, class: "space-y-6 mb-6"], fn f -> %>
+      <div>
+        <%= label(f, :email, class: "label") %>
+        <div class="mt-1">
+          <%= text_input(f, :email, required: true, autofocus: true, autocomplete: "email", class: "input") %>
+        </div>
+      </div>
 
-      <%= FormView.text_field(f, :last_name) %>
+      <div>
+        <%= label(f, :first_name, class: "label") %>
+        <div class="mt-1">
+          <%= text_input(f, :first_name, required: true, class: "input") %>
+        </div>
+      </div>
 
-      <%= FormView.password_field(f, :password, placeholder: "Password") %>
+      <div>
+        <%= label(f, :last_name, class: "label") %>
+        <div class="mt-1">
+          <%= text_input(f, :last_name, required: true, class: "input") %>
+        </div>
+      </div>
 
-      <%= FormView.password_field(f, :password_confirmation, placeholder: "Password Confirmation") %>
+      <div>
+        <%= label(f, :password, class: "label") %>
+        <div class="mt-1">
+          <%= password_input(f, :password, required: true, class: "input") %>
+        </div>
+      </div>
 
-      <%= FormView.file_field(f, :avatar) %>
+      <div>
+        <%= label(f, :password_confirmation, class: "label") %>
+        <div class="mt-1">
+          <%= password_input(f, :password_confirmation, required: true, class: "input") %>
+        </div>
+      </div>
 
-      <%= FormView.submit_button("Register") %>
+      <div>
+        <%= label(f, :avatar, class: "label") %>
+        <div class="mt-1">
+          <%= file_input(f, :avatar, class: "input") %>
+        </div>
+      </div>
+
+      <div>
+        <%= submit("Register", class: "w-full btn-primary") %>
+      </div>
     <% end) %>
   </div>
 </div>
