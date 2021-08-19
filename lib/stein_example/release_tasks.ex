@@ -12,7 +12,9 @@ defmodule SteinExample.ReleaseTasks do
 
   @start_extra_apps [
     :gettext,
-    :ranch
+    :bamboo,
+    :ranch,
+    :phoenix
   ]
 
   @repos [

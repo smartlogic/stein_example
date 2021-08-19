@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.12.2-erlang-24.0.4-alpine-3.14.0 as builder
+FROM hexpm/elixir:1.12.2-erlang-24.0.5-alpine-3.14.0 as builder
 
 # The nuclear approach:
 # RUN apk add --no-cache alpine-sdk
