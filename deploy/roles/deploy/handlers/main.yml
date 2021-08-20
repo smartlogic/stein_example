@@ -1,4 +1,4 @@
 ---
-- name: restart stein_example phoenix
+- name: restart stein_example
   command: systemctl restart stein_example
   become: true

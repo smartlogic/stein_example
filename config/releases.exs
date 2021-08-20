@@ -13,3 +13,20 @@ config :logger, level: :info
 config :phoenix, :logger, false
 
 config :stein_phoenix, :views, error_helpers: Web.ErrorHelpers
+
+release =
+  case File.exists?("REVISION") do
+    true ->
+      String.trim(File.read!("REVISION"))
+
+    false ->
+      "unknown"
+  end
+
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN_URL"),
+  environment_name: System.get_env("DEPLOY_ENV"),
+  release: revision,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  included_environments: ["production", "staging"]

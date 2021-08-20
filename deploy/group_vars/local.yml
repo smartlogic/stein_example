@@ -1,5 +1,8 @@
 ---
-stein_example_vapor_file: "{{ playbook_dir }}/files/stein_example.local.env"
+
+release_env: local
+
+vapor_file: "{{ playbook_dir }}/files/stein_example.local.env"
 
 firewall_ports:
   - rule: allow

@@ -4,10 +4,25 @@
   run_once: true
   local_action: command {{ playbook_dir }}/../release.sh
 
-- name: "Copy file to server"
+- name: copy config file
+  copy:
+    src: "{{ vapor_file }}"
+    dest: /etc/wck.env
+  become: yes
+
+- name: "Deployer tmp folder"
+  file:
+    path: "/home/{{ deployer }}/tmp"
+    state: directory
+  become: true
+  become_user: "{{ deployer }}"
+
+- name: "Copy archive to server"
   copy:
     src: "{{ playbook_dir }}/tmp/stein_example.tar.gz"
-    dest: /tmp/stein_example.tar.gz
+    dest: "/home/{{ deployer }}/tmp/stein_example.tar.gz"
+  become: true
+  become_user: "{{ deployer }}"
 
 - name: ensure release directory
   file:
@@ -18,7 +33,7 @@
 
 - name: unarchive to working directory
   unarchive:
-    src: "/tmp/stein_example.tar.gz"
+    src: "/home/{{ deployer }}/tmp/stein_example.tar.gz"
     dest: "{{ release_path }}"
     remote_src: true
   become: true
@@ -30,6 +45,11 @@
     dest: "{{ release_path }}"
   become: true
   become_user: "{{ deployer }}"
+
+- name: register REVISION
+  ansible.builtin.slurp:
+    src: "{{ release_path }}/REVISION"
+  register: deploy_revision
 
 - name: run migrations
   shell: "export $(cat /etc/stein_example.env | xargs) && {{ release_path }}/bin/stein_example eval \"SteinExample.ReleaseTasks.Migrate.run()\""
@@ -43,6 +63,32 @@
     src: "{{ release_path }}"
     state: "link"
     force: yes
-  notify: "restart stein_example phoenix"
+  notify: "restart stein_example"
   become: true
   become_user: "{{ deployer }}"
+
+- name: register sentry release
+  when: sentry_organization_slug is defined
+  ansible.builtin.uri:
+    url: "https://sentry.io/api/0/organizations/{{ sentry_organization_slug }}/releases/"
+    method: POST
+    status_code: [201, 208]
+    body_format: json
+    headers:
+      Authorization: "Bearer {{ sentry_secret_token }}"
+    body:
+      version: "{{ deploy_revision['content'] | b64decode | trim }}"
+      projects:
+        - "{{ sentry_project_slug }}"
+
+- name: register sentry deploy
+  when: sentry_organization_slug is defined
+  ansible.builtin.uri:
+    url: "https://sentry.io/api/0/organizations/{{ sentry_organization_slug }}/releases/{{ deploy_revision['content'] | b64decode | trim }}/deploys/"
+    method: POST
+    status_code: [201, 208]
+    body_format: json
+    headers:
+      Authorization: "Bearer {{ sentry_secret_token }}"
+    body:
+      environment: "{{ release_env }}"

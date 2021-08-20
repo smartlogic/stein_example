@@ -9,6 +9,7 @@ defmodule SteinExample.Application do
     children = [
       {Phoenix.PubSub, name: SteinExample.PubSub},
       SteinExample.Config.Cache,
+      SteinExample.Telemetry,
       SteinExample.PromEx,
       SteinExample.Repo,
       Web.Endpoint

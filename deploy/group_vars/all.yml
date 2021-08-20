@@ -1,5 +1,9 @@
 ---
 
+# Uncomment and update with proper tokens to trigger sentry release and deploys
+# sentry_organization_slug: smartlogic
+# sentry_secret_token: token
+
 github_keys_install_user: deploy
 github_keys_create_install_user: false
 github_keys_github_orgs:
