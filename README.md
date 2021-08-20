@@ -89,7 +89,7 @@ git mv deploy/files/stein_example.local.env deploy/files/my_app.local.env
 git mv deploy/files/stein_example.service deploy/files/my_app.service
 ```
 
-Update the `git_repo` variable in `./scripts/remote.sh`
+Update the `git_repo` variable in `./bin/remote`
 
 #### Heroku
 
@@ -119,7 +119,7 @@ The `deploy.yml` playbook generates a local release, copies it over to the appli
 In order to connect to a running service, connect via the `remote.sh` script:
 
 ```bash
-./scripts/remote.sh local iex
+./bin/remote local iex
 ```
 
 If you want to run a release task manually, ssh in as `deploy`:
@@ -144,16 +144,16 @@ To help facilitate remote debugging, we have a script to start a remote IEx or p
 
 ```bash
 # To start a bash session
-./scripts/remote.sh production bash
+./bin/remote production bash
 
 # To start an IEx session
-./scripts/remote.sh production iex
+./bin/remote production iex
 
 # To start a psql session
-./scripts/remote.sh production psql
+./bin/remote production psql
 ```
 
-See `./scripts/remote.sh` for more of what it can do, as that help is more up to date.
+See `./bin/remote` for more of what it can do, as that help is more up to date.
 
 ### Docker locally
 

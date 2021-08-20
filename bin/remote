@@ -11,9 +11,9 @@ ssh_options=()
 ssh_port=22
 
 help_text=$(cat <<"HELP"
-remote.sh - Help manage remote nodes
+remote - Help manage remote nodes
 
-  remote.sh [production|staging|local] [command]
+  ./bin/remote [production|staging|local] [command]
 
 Commands:
 
