@@ -26,7 +26,7 @@ release =
 config :sentry,
   dsn: System.get_env("SENTRY_DSN_URL"),
   environment_name: System.get_env("DEPLOY_ENV"),
-  release: revision,
+  release: release,
   enable_source_code_context: true,
   root_source_code_path: File.cwd!(),
   included_environments: ["production", "staging"]
