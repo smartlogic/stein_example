@@ -19,6 +19,8 @@ Commands:
 
 bash    Start a remote bash shell
 
+deploy  Deploy `origin/main` to the environment
+
 diff    Diff the currently deployed version against `origin/main`
 
 help    View this help message
@@ -62,6 +64,10 @@ ssh_options=("${ssh_host}" -l "${ssh_user}" -p "${ssh_port}" "${ssh_options[@]}"
 case "${2}" in
   bash)
     ssh "${ssh_options[@]}" -t -C 'export $(cat /etc/stein_example.env | xargs) && bash'
+    ;;
+
+  deploy)
+    ansible-playbook -l ${environment} deploy/deploy.yml
     ;;
 
   diff)

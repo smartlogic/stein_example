@@ -12,7 +12,8 @@ GIT_SHA=$(git rev-parse main)
 
 rm -rf tmp/build
 mkdir -p tmp/build
-git archive --format=tar main | tar x -C tmp/build/
+git fetch origin main
+git archive --format=tar origin/main | tar x -C tmp/build/
 cd tmp/build
 
 export DOCKER_BUILDKIT=0
