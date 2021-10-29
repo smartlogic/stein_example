@@ -28,6 +28,7 @@ defmodule Web.SessionController do
   def delete(conn, _params) do
     conn
     |> clear_session()
+    |> put_flash(:info, "You have signed out.")
     |> redirect(to: Routes.page_path(conn, :index))
   end
 

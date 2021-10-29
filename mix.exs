@@ -53,7 +53,8 @@ defmodule SteinExample.MixProject do
       {:sentry, "~> 8.0"},
       {:stein, "~> 0.5"},
       {:stein_storage, "~> 0.1"},
-      {:vapor, "~> 0.10.0"}
+      {:vapor, "~> 0.10.0"},
+      {:wallaby, "~> 0.29.1", runtime: false, only: :test}
     ]
   end
 

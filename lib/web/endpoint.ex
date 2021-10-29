@@ -4,6 +4,10 @@ defmodule Web.Endpoint do
 
   alias SteinExample.Config
 
+  if sandbox = Application.compile_env(:stein_example, :sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox, sandbox: sandbox
+  end
+
   socket "/socket", Web.UserSocket,
     websocket: true,
     longpoll: false
