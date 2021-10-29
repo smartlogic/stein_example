@@ -29,7 +29,8 @@ jobs:
             - v1-build-cache-{{ .Branch }}
             - v1-build-cache
       - run: mix do deps.get, compile
-      - run: cd assets && yarn && cd ..
+      - run: cd assets && yarn && yarn run build && cd ..
+      - run: mix phx.digest
       - save_cache:
           key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
           paths: "assets/node_modules"
@@ -39,6 +40,12 @@ jobs:
       - save_cache:
           key: v1-yarn-cache
           paths: "assets/node_modules"
+      - save_cache:
+          key: v1-static-cache-{{ .Branch }}}
+          paths: "priv/static"
+      - save_cache:
+          key: v1-static-cache
+          paths: "priv/static"
       - save_cache:
           key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
           paths: "deps"
@@ -115,6 +122,8 @@ jobs:
       - restore_cache:
           key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
       - restore_cache:
+          key: v1-static-cache-{{ .Branch }}
+      - restore_cache:
           key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
       - restore_cache:
           key: v1-build-cache-{{ .Branch }}
@@ -123,25 +132,6 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: mix ecto.migrate
       - run: mix test
-
-  assets:
-    parallelism: 1
-    docker:
-      - image: circleci/elixir:1.11.4-node
-        environment:
-          MIX_ENV: test
-    steps:
-      - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
-      - restore_cache:
-          key: v1-yarn-cache-{{ .Branch }}-{{ checksum "assets/yarn.lock" }}
-      - restore_cache:
-          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-      - restore_cache:
-          key: v1-build-cache-{{ .Branch }}
-      - run: cd assets && yarn run build && cd ..
-      - run: mix phx.digest
 
 workflows:
   test:
@@ -154,8 +144,5 @@ workflows:
           requires:
             - setup
       - test:
-          requires:
-            - setup
-      - assets:
           requires:
             - setup
