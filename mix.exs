@@ -41,10 +41,12 @@ defmodule SteinExample.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:logster, "~> 1.0"},
-      {:phoenix, "~> 1.5"},
+      {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.5"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_view, "~> 0.16.4"},
       {:phoenix_pubsub, "~> 2.0"},
       {:plug_cowboy, "~> 2.2"},
       {:porcelain, "~> 2.0"},
@@ -53,6 +55,8 @@ defmodule SteinExample.MixProject do
       {:sentry, "~> 8.0"},
       {:stein, "~> 0.5"},
       {:stein_storage, "~> 0.1"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 0.5"},
       {:vapor, "~> 0.10.0"},
       {:wallaby, "~> 0.29.1", runtime: false, only: :test}
     ]
