@@ -41,3 +41,11 @@ npm-debug.log
 /deploy/collections/
 /deploy/galaxy-roles/
 /deploy/tmp/
+
+# Wallaby Screenshots on Failure
+/screenshots
+
+# nix or docker
+/.nix-hex
+/.nix-mix
+/.docker

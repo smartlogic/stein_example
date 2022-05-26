@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 #
 # If you're looking to update variables, you probably want to:

@@ -8,6 +8,8 @@ You can also clone this repo as a starting point for a new project to get going 
 
 Install PostgreSQL through your package manager of choice, or if you're on MacOS you can use [Postgres.app](https://postgresapp.com/). Make sure to have **PostgreSQL 12** or above.
 
+### With ASDF
+
 Install Elixir, Erlang, and NodeJS through [asdf](https://asdf-vm.com/#/) using the versions supplied in `.tool-versions`. Once you have asdf, you can install them all with `asdf install` from the root of the project.
 
 ```bash
@@ -18,7 +20,29 @@ npm install -g yarn
 
 mix deps.get
 mix ecto.setup
-(cd assets && yarn install)
+(cd assets && yarn install && yarn build)
+iex -S mix phx.server
+```
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser. See `priv/repo/seeds.exs` for seeded accounts.
+
+### With Nix
+
+Install [the nix package manager](https://nixos.org/download.html#nix-install-macos) by following their multi-user installer. Once nix is installed, setup [direnv](https://direnv.net/) by hooking into your shell.
+
+```bash
+nix-env -f '<nixpkgs>' -iA direnv
+echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+```
+
+Once direnv is installed and your shell is restarted, clone the project and `cd` into it. You should see direnv warn about an untrusted `.envrc` file. Allow the file and finish installing dependencies and setting up the application.
+
+```bash
+direnv allow
+
+mix deps.get
+mix ecto.reset
+(cd assets && yarn install && yarn build)
 iex -S mix phx.server
 ```
 
