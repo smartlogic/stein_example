@@ -12,7 +12,7 @@ config :stein_example,
   ecto_repos: [SteinExample.Repo]
 
 config :stein_example, SteinExample.PromEx,
-  disabled: false,
+  disabled: Mix.env() == :dev,
   manual_metrics_start_delay: :no_delay,
   drop_metrics_groups: [],
   grafana: :disabled,
