@@ -4,6 +4,10 @@
 # sentry_organization_slug: smartlogic
 # sentry_project_slug: smartlogic-project
 # sentry_secret_token: token
+#
+# Uncomment and update with proper tokens to trigger slack notices for deploys
+# slack_token: "YYYYY/AAAAA/BBBBBBBBB"
+# slack_channel: "#project-internal"
 
 github_keys_install_user: deploy
 github_keys_create_install_user: false

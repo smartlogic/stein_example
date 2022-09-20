@@ -67,40 +67,8 @@
   become: true
   become_user: "{{ deployer }}"
 
-- name: register sentry release
+- include_tasks: sentry.yml
   when: sentry_organization_slug is defined
-  ansible.builtin.uri:
-    url: "https://sentry.io/api/0/organizations/{{ sentry_organization_slug }}/releases/"
-    method: POST
-    status_code: [201, 208]
-    body_format: json
-    headers:
-      Authorization: "Bearer {{ sentry_secret_token }}"
-    body:
-      version: "{{ deploy_revision['content'] | b64decode | trim }}"
-      projects:
-        - "{{ sentry_project_slug }}"
 
-- name: finalize sentry release
-  when: release_env == "production"
-  ansible.builtin.uri:
-    url: "https://sentry.io/api/0/organizations/{{ sentry_organization_slug }}/releases/{{ deploy_revision['content'] | b64decode | trim }}/"
-    method: PUT
-    status_code: 200
-    body_format: json
-    headers:
-      Authorization: "Bearer {{ sentry_secret_token }}"
-    body:
-      dateReleased: "{{ ansible_date_time.iso8601 }}"
-
-- name: register sentry deploy
-  when: sentry_organization_slug is defined
-  ansible.builtin.uri:
-    url: "https://sentry.io/api/0/organizations/{{ sentry_organization_slug }}/releases/{{ deploy_revision['content'] | b64decode | trim }}/deploys/"
-    method: POST
-    status_code: [201, 208]
-    body_format: json
-    headers:
-      Authorization: "Bearer {{ sentry_secret_token }}"
-    body:
-      environment: "{{ release_env }}"
+- include_tasks: slack.yml
+  when: slack_token is defined
