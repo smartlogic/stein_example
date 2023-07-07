@@ -39,7 +39,7 @@
     "prettier": "^2.2.1",
     "sass-loader": "^12.0.0",
     "style-loader": "^3.0.0",
-    "stylelint": "^13.12.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.19.0",
